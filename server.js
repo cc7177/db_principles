@@ -85,7 +85,7 @@ app.post('/api/addVehicle', (req, res) => {
             return;
         }
     });
-    res.redirect(`http://${HOST}:${PORT}`);
+    res.redirect(`https://${HOST}`);
 });
 
 app.post('/api/updateVehicle', (req, res) => {
