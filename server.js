@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
 const db = mysql.createConnection({
-    host: process.env.HOST,
+    host: "dpg-com28521hbls7399hmf0-a",
     user: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
