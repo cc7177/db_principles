@@ -10,8 +10,11 @@
 <body>
     <h1>Add Rental</h1>
     <form action="/api/addRental" method="POST"> 
+
         <label for="vehicleid">Vehicle ID:</label> 
-        <input type="text" id="vehicleid" name="vehicleid" required><br><br> 
+        <select id="vehicleid_dropdown" name="vehicleid">
+            <option value="">Select Vehicle</option>
+        </select><br><br> 
         
         <label for="customerid">Customer ID:</label> 
         <input type="text" id="customerid" name="customerid" required><br><br> 
@@ -32,6 +35,24 @@
         <input type="text" id="totalcost" name="totalcost" required><br><br> 
         
         <input type="submit" value="Submit"> </form>
+
+        <script>
+        
+        // Function to fetch and display entries
+        async function fetchVehicles() {
+            const response = await fetch('/api/get_vehicles');
+            const data = await response.json();
+            const entriesList = document.querySelector('#vehicleid_dropdown option');
+            data.rows.forEach(entry => {
+                const newOption = document.createElement('option');
+                newOption.value = entry.vehicleid;
+                newOption.textContent = `${entry.licenseplate} - ${entry.make}`;
+                dropdown.appendChild(newOption);
+            });
+        }
+
+        fetchVehicles()
+        </script>
 </body>
 
 </html>
