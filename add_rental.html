@@ -39,19 +39,19 @@
         <script>
         
         // Function to fetch and display entries
-        function fetchVehicles() {
-            const response = fetch('/api/get_vehicles');
-            const data = response.json();
-            const entriesList = document.querySelector('#vehicleid_dropdown option');
-            data.rows.forEach(entry => {
+        fetch('/api/get_vehicles')
+            .then(response => response.json())
+            .then(data => {
+                const dropdown = document.querySelector('#vehicleid_dropdown option');
+                data.rows.forEach(entry => {
                 const newOption = document.createElement('option');
                 newOption.value = entry.vehicleid;
                 newOption.textContent = `${entry.licenseplate} - ${entry.make}`;
                 dropdown.appendChild(newOption);
-            });
-        }
 
-        fetchVehicles()
+            });
+        });
+
         </script>
 </body>
 
