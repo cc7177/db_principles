@@ -178,7 +178,7 @@ app.post('/api/addCustomer', (req, res) => {
 });
 
 app.post('/api/addRental', (req, res) => {
-    const VehicleID=req.body.vehicleid;
+    const VehicleID=req.body.vehicleid_dropdown;
     const CustomerID=req.body.customerid;
     const StartDate=req.body.startdate;
     const EndDate=req.body.enddate;
