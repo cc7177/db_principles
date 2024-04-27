@@ -79,7 +79,7 @@ app.post('/api/addVehicle', (req, res) => {
     const Mileage=req.body.mileage;
 
     db.query('INSERT INTO Vehicles (licenseplate, make, model, year, color, vehicletype, status, mileage) '
-           + 'VALUES (?,?,?,?,?,?,?,?,?)', [LicensePlate, Make, Model, Year, Color, VehicleType, Status, Mileage], (err, results) => {
+           + 'VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)', [LicensePlate, Make, Model, Year, Color, VehicleType, Status, Mileage], (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
             res.status(500).json({error: 'Internal Server Error'})
@@ -100,20 +100,21 @@ app.post('/api/updateVehicle', (req, res) => {
     const Status=req.body.status;
     const Mileage=req.body.mileage;
 
-    db.query('UPDATE Vehicles SET LicensePlate=?, Make=?, Model=?, Year=?, Color=?, VehicleType=?, Status=?, Mileage=? WHERE VehicleID=?', [LicensePlate, Make, Model, Year, Color, VehicleType, Status, Mileage, VehicleID], (err, results) => {
+    db.query('UPDATE Vehicles SET LicensePlate=$1, Make=$2, Model=$3, Year=$4, Color=$5, VehicleType=$6, Status=$7, Mileage=$8 WHERE VehicleID=$9'
+             , [LicensePlate, Make, Model, Year, Color, VehicleType, Status, Mileage, VehicleID], (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
             res.status(500).json({error: 'Internal Server Error'})
             return;
         }
     });
-    res.redirect(`http://${HOST}:${PORT}`);
+    res.redirect(`${HOST}`);
 });
 
 app.delete('/api/removeVehicle', (req, res) => {
     const VehicleID=req.query.id;
 
-    db.query('DELETE FROM Vehicles WHERE VehicleID=?', [VehicleID], (err, results) => {
+    db.query('DELETE FROM Vehicles WHERE VehicleID=$1', [VehicleID], (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
             res.status(500).json({error: 'Internal Server Error'})
