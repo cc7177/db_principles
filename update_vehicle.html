@@ -57,34 +57,34 @@
         const response = await fetch(`/api/get_vehicle?id=${urlParams.get('id')}`);
         const data = await response.json();
 
-            data.forEach(entry => {
+            data.rows.forEach(entry => {
                      
             let vehicleID = document.querySelector('#vehicleID');
             vehicleID.value = urlParams.get('id')
 
             let vehicleMake = document.querySelector('#make');
-            vehicleMake.value = entry.Make;
+            vehicleMake.value = entry.make;
 
             let vehicleModel = document.querySelector('#model');
-            vehicleModel.value = entry.Model;
+            vehicleModel.value = entry.model;
 
             let vehicleYear = document.querySelector('#year');
-            vehicleYear.value = entry.Year;
+            vehicleYear.value = entry.year;
 
             let vehicleColor = document.querySelector('#color');
-            vehicleColor.value = entry.Color;
+            vehicleColor.value = entry.color;
 
             let vehicleType = document.querySelector('#vehicleType');
-            vehicleType.value = entry.VehicleType;
+            vehicleType.value = entry.vehicletype;
 
             let licensePlate = document.querySelector('#licensePlate');
-            licensePlate.value = entry.LicensePlate;
+            licensePlate.value = entry.licenseplate;
 
             let vehicleMileage = document.querySelector('#mileage');
-            vehicleMileage.value = entry.Mileage;
+            vehicleMileage.value = entry.mileage;
 
             let vehicleStatus = document.querySelector('#status');
-            vehicleStatus.value = entry.Status;
+            vehicleStatus.value = entry.status;
             });
 
     }
