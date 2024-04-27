@@ -1,1 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Customer</title>
+</head>
+
+<body>
+    <h1>Update Customer</h1>
+    <form action="/api/updateCustomer" id="update_form" method="POST"> 
+        <input type="hidden" id="customerID" name="customerID"><br><br>
+        
+        <label for="firstname">First Name:</label> 
+        <input type="text" id="firstname" name="firstname" required><br><br> 
+        
+        <label for="lastname">Last Name:</label> 
+        <input type="text" id="lastname" name="lastname" required><br><br> 
+        
+        <label for="driverlicensenumber">Driver License #:</label> 
+        <input type="text" id="driverlicensenumber" name="driverlicensenumber" required><br><br> 
+        
+        <label for="email">Email:</label> 
+        <input type="text" id="email" name="email" required><br><br> 
+
+        <label for="phone">Phone:</label> 
+        <input type="text" id="phone" name="phone" required><br><br> 
+
+        <label for="address">Address:</label> 
+        <input type="text" id="address" name="address" required><br><br> 
+        
+        <input type="submit" value="Submit"> </form>
+</body>
+
+<script>
+    async function fetchCustomer() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        const response = await fetch(`/api/get_customer?id=${urlParams.get('id')}`);
+        const data = await response.json();
+
+            data.rows.forEach(entry => {
+                     
+            let customerID = document.querySelector('#customerID');
+            customerID.value = urlParams.get('id')
+
+            let firstName = document.querySelector('#firstname');
+            firstName.value = entry.firstname;
+
+            let lastName = document.querySelector('#lastname');
+            lastName.value = entry.lastname;
+
+            let driverLicense = document.querySelector('#driverlicensenumber');
+            driverLicense.value = entry.driverlicensenumber;
+
+            let vehicleColor = document.querySelector('#color');
+            vehicleColor.value = entry.color;
+
+            let email = document.querySelector('#email');
+            email.value = entry.email;
+
+            let phone = document.querySelector('#phone');
+            phone.value = entry.phone;
+
+            let address = document.querySelector('#address');
+            address.value = entry.address;
+
+            });
+
+    }
+
+    // Initial fetch to populate the entries list
+    fetchCustomer();
+
+    
+</script>
+
+</html>
