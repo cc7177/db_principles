@@ -43,6 +43,7 @@
             .then(response => response.json())
             .then(data => {
                 const dropdown = document.querySelector('#vehicleid_dropdown option');
+                dropdown.innerHTML = ''; // Clear previous entries
                 data.rows.forEach(entry => {
                 const newOption = document.createElement('option');
                 newOption.value = entry.vehicleid;
