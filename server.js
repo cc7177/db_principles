@@ -41,12 +41,20 @@ app.get('/customers', function(req, res) {
     res.sendFile(path.join(__dirname, '/customers.html'));
   });
 
+app.get('/rentals', function(req, res) {
+   res.sendFile(path.join(__dirname, '/rentals.html'));
+  });
+
 app.get('/add_vehicle_form', function(req, res) {
     res.sendFile(path.join(__dirname, '/add_vehicle.html'));
   });
 
 app.get('/add_customer_form', function(req, res) {
     res.sendFile(path.join(__dirname, '/add_customer.html'));
+  });
+
+app.get('/add_rental_form', function(req, res) {
+   res.sendFile(path.join(__dirname, '/add_rental.html'));
   });
 
 app.get('/update_vehicle_form', function(req, res) {
@@ -56,6 +64,11 @@ app.get('/update_vehicle_form', function(req, res) {
 app.get('/update_customer_form', function(req, res) {
     res.sendFile(path.join(__dirname, '/update_customer.html'));
   });
+
+app.get('/update_rental_form', function(req, res) {
+    res.sendFile(path.join(__dirname, '/update_rental.html'));
+  });
+
 
 app.get('/api/get_vehicles', (req, res) => {
     db.query('SELECT * FROM vehicles', (err, results) => {
@@ -79,6 +92,17 @@ app.get('/api/get_customers', (req, res) => {
     });
 });
 
+app.get('/api/get_rentals', (req, res) => {
+    db.query('SELECT * FROM rentals', (err, results) => {
+        if(err) {
+            console.error('Error executing query...', err);
+            res.status(500).json({error: 'Internal Server Error'})
+            return;
+        }
+        res.json(results);
+    });
+});
+
 
 app.get('/api/get_vehicle', (req, res) => {
     db.query('SELECT * FROM vehicles WHERE VehicleID=$1', [req.query.id], (err, results) => {
@@ -93,6 +117,17 @@ app.get('/api/get_vehicle', (req, res) => {
 
 app.get('/api/get_customer', (req, res) => {
     db.query('SELECT * FROM customers WHERE customerid=$1', [req.query.id], (err, results) => {
+        if(err) {
+            console.error('Error executing query...', err);
+            res.status(500).json({error: 'Internal Server Error'})
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.get('/api/get_rental', (req, res) => {
+    db.query('SELECT * FROM rentals WHERE rentalid=$1', [req.query.id], (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
             res.status(500).json({error: 'Internal Server Error'})
@@ -142,6 +177,26 @@ app.post('/api/addCustomer', (req, res) => {
     res.redirect('/customers');
 });
 
+app.post('/api/addRental', (req, res) => {
+    const VehicleID=req.body.vehicleid;
+    const CustomerID=req.body.customerid;
+    const StartDate=req.body.startdate;
+    const EndDate=req.body.enddate;
+    const ActualEndDate=req.body.actualenddate;
+    const DailyRate=req.body.dailyrate;
+    const TotalCost=req.body.totalcost;
+
+    db.query('INSERT INTO rentals (vehicleid, customerid, startdate, enddate, actualenddate, dailyrate, totalcost) '
+           + 'VALUES ($1,$2,$3,$4,$5,$6,$7)', [VehicleID, CustomerID, StartDate, EndDate, ActualEndDate, DailyRate, TotalCost], (err, results) => {
+        if(err) {
+            console.error('Error executing query...', err);
+            res.status(500).json({error: 'Internal Server Error'})
+            return;
+        }
+    });
+    res.redirect('/rentals');
+});
+
 app.post('/api/updateVehicle', (req, res) => {
     const VehicleID=req.body.vehicleID;
     const LicensePlate=req.body.licensePlate;
@@ -173,7 +228,7 @@ app.post('/api/updateCustomer', (req, res) => {
     const Phone=req.body.phone;
     const Address=req.body.address;
 
-    db.query('UPDATE customers SET firstname=$1, lastname=$2, driverlicensenumber=$3, email=$4, phone=$5, address=$6 WHERE customerid=$7'
+    db.query('UPDATE customers SET fistname=$1, lastname=$2, driverlicensenumber=$3, email=$4, phone=$5, address=$6 WHERE customerid=$7'
              , [FirstName, LastName, DriverLicense, Email, Phone, Address, CustomerID], (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
@@ -182,6 +237,27 @@ app.post('/api/updateCustomer', (req, res) => {
         }
     });
     res.redirect('/customers');
+});
+
+app.post('/api/updateRental', (req, res) => {
+    const RentalID=req.body.rentalID;
+    const VehicleID=req.body.vehicleID;
+    const CustomerID=req.body.customerid;
+    const StartDate=req.body.startdate;
+    const EndDate=req.body.enddate;
+    const ActualEndDate=req.body.actualenddate;
+    const DailyRate=req.body.dailyrate;
+    const TotalCost=req.body.totalcost;
+
+    db.query('UPDATE rentals SET vehicleid=$1, customerid=$2, startdate=$3, enddate=$4, actualenddate=$5, dailyrate=$6, totalcost=$7 WHERE rentalid=$8'
+             , [VehicleID, CustomerID, StartDate, EndDate, ActualEndDate, DailyRate, TotalCost, RentalID], (err, results) => {
+        if(err) {
+            console.error('Error executing query...', err);
+            res.status(500).json({error: 'Internal Server Error'})
+            return;
+        }
+    });
+    res.redirect('/rentals');
 });
 
 app.delete('/api/removeVehicle', (req, res) => {
@@ -210,6 +286,18 @@ app.delete('/api/removeCustomer', (req, res) => {
     return;
 });
 
+app.delete('/api/removeRental', (req, res) => {
+    const RentalID=req.query.id;
+
+    db.query('DELETE FROM rentals WHERE rentalid=$1', [RentalID], (err, results) => {
+        if(err) {
+            console.error('Error executing query...', err);
+            res.status(500).json({error: 'Internal Server Error'})
+            return;
+        }
+    });
+    return;
+});
 
 
 // Start server

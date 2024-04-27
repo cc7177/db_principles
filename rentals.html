@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle Rental Database (VRD)</title>
-    <h1>VRD - Vehicle Inventory </h1>
+    <h1>VRD - Rentals</h1>
 <style>
     table {
         width: 100%;
@@ -54,21 +54,21 @@ li a:hover:not(.active) {
 </head>
 <body>
     <ul>
-  <li><a class="active" href="/">Vehicle Inventory</a></li>
+  <li><a href="/">Vehicle Inventory</a></li>
   <li><a href="/customers">Customers</a></li>
-  <li><a href="/rentals">Rentals</a></li>
+  <li><a class="active" href="/rentals">Rentals</a></li>
 </ul>
     <table id="rentalTable">
         <thead id="">
             <tr>
+                <th>Rental ID</th>
                 <th>Vehicle ID</th>
-                <th>License Plate</th>
-                <th>Make</th>
-                <th>Model</th>
-                <th>Color</th>
-                <th>Vehicle Type</th>
-                <th>Status</th>
-                <th>Mileage</th>
+                <th>Rental ID</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actual End Date</th>
+                <th>Daily Rate</th>
+                <th>Total Cost</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -76,34 +76,34 @@ li a:hover:not(.active) {
 
         </tbody>
     </table>
-    <button type="submit" onclick="window.location.href='/add_vehicle_form'">Add Vehicle</button>
+    <button type="submit" onclick="window.location.href='/add_rental_form'">Add Rental</button>
 </body>
 
     <script>
 
-        function getVehicleForm() {
-            fetch('/add_vehicle_form');
+        function getRentalForm() {
+            fetch('/add_rental_form');
         }
        
         // Function to fetch and display entries
         async function fetchEntries() {
-            const response = await fetch('/api/get_vehicles');
+            const response = await fetch('/api/get_rentals');
             const data = await response.json();
             const entriesList = document.querySelector('#rentalTable tbody');
             entriesList.innerHTML = ''; // Clear previous entries
             data.rows.forEach(entry => {
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
+                <td>${entry.rentalid}</td>
                 <td>${entry.vehicleid}</td>
-                <td>${entry.licenseplate}</td>
-                <td>${entry.make}</td>
-                <td>${entry.model}</td>
-                <td>${entry.color}</td>
-                <td>${entry.vehicletype}</td>
-                <td>${entry.status}</td>
-                <td>${entry.mileage}</td>
-                <td><a href='/update_vehicle_form?id=${entry.vehicleid}'>Update</a></td>
-                <td><a href='javascript:deleteEntry(${entry.vehicleid})'>Delete</a></td>
+                <td>${entry.customerid}</td>
+                <td>${entry.startdate}</td>
+                <td>${entry.enddate}</td>
+                <td>${entry.actualenddate}</td>
+                <td>${entry.dailyrate}</td>
+                <td>${entry.totalcost}</td>
+                <td><a href='/update_Rental_form?id=${entry.rentalid}'>Update</a></td>
+                <td><a href='javascript:deleteEntry(${entry.rentalid})'>Delete</a></td>
                 `
                 entriesList.appendChild(newRow);
             });
@@ -112,7 +112,7 @@ li a:hover:not(.active) {
 
         // Function to delete an existing entry
         function deleteEntry(id) {
-            fetch(`/api/removeVehicle?id=${id}`, {
+            fetch(`/api/removeRental?id=${id}`, {
                 method: 'DELETE'
             });
             fetchEntries(); // Refresh the list after deletion

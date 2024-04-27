@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Rental</title>
+</head>
+
+<body>
+    <h1>Update Rental</h1>
+    <form action="/api/updateRental" id="update_form" method="POST"> 
+        <input type="hidden" id="rentalID" name="rentalID"><br><br>
+        
+        <label for="vehicleid">Vehicle ID:</label> 
+        <input type="text" id="vehicleid" name="vehicleid" required><br><br> 
+        
+        <label for="customerid">Customer ID:</label> 
+        <input type="text" id="customerid" name="customerid" required><br><br> 
+        
+        <label for="startdate">Start Date:</label> 
+        <input type="text" id="startdate" name="startdate" required><br><br> 
+        
+        <label for="enddate">End Date:</label> 
+        <input type="text" id="enddate" name="enddate" required><br><br> 
+
+        <label for="actualenddate">Actual End Date:</label> 
+        <input type="text" id="actualenddate" name="actualenddate" required><br><br> 
+
+        <label for="dailyrate">Daily Rate:</label> 
+        <input type="text" id="dailyrate" name="dailyrate" required><br><br> 
+
+        <label for="totalcost">Total Cost:</label> 
+        <input type="text" id="totalcost" name="totalcost" required><br><br> 
+        
+        <input type="submit" value="Submit"> </form>
+</body>
+
+<script>
+    async function fetchRental() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        const response = await fetch(`/api/get_rental?id=${urlParams.get('id')}`);
+        const data = await response.json();
+
+            data.rows.forEach(entry => {
+                     
+            let RentalID = document.querySelector('#rentalID');
+            RentalID.value = urlParams.get('id')
+
+            let vehicleID = document.querySelector('#vehicleid');
+            vehicleID.value = entry.vehicleid;
+
+            let customerID = document.querySelector('#customerid');
+            customerID.value = entry.customerid;
+
+            let startDate = document.querySelector('#startdate');
+            startDate.value = entry.startdate;
+
+            let endDate = document.querySelector('#enddate');
+            endDate.value = entry.enddate;
+
+            let actualEndDate = document.querySelector('#actualenddate');
+            actualEndDate.value = entry.actualenddate;
+
+            let dailyRate = document.querySelector('#dailyrate');
+            dailyRate.value = entry.dailyrate;
+
+            let totalCost = document.querySelector('#totalcost');
+            totalCost.value = entry.totalcost;
+
+            });
+
+    }
+
+    // Initial fetch to populate the entries list
+    fetchRental();
+
+    
+</script>
+
+</html>
