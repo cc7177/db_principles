@@ -86,7 +86,7 @@ app.post('/api/addVehicle', (req, res) => {
             return;
         }
     });
-    res.redirect(`${HOST}`);
+    res.redirect('/');
 });
 
 app.post('/api/updateVehicle', (req, res) => {
@@ -108,7 +108,7 @@ app.post('/api/updateVehicle', (req, res) => {
             return;
         }
     });
-    res.redirect(`${HOST}`);
+    res.redirect('/');
 });
 
 app.delete('/api/removeVehicle', (req, res) => {
