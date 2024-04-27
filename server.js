@@ -45,7 +45,7 @@ app.get('/update_vehicle_form', function(req, res) {
     res.sendFile(path.join(__dirname, '/update_vehicle.html'));
   });
 
-app.get('/api/data', (req, res) => {
+app.get('/api/get_vehicles', (req, res) => {
     db.query('SELECT * FROM vehicles', (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
