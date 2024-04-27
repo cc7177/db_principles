@@ -58,7 +58,7 @@ app.get('/api/data', (req, res) => {
 
 
 app.get('/api/get_vehicle', (req, res) => {
-    db.query('SELECT * FROM vehicles WHERE VehicleID=$1::text', [req.query.id], (err, results) => {
+    db.query('SELECT * FROM vehicles WHERE VehicleID=$1', [req.query.id], (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
             res.status(500).json({error: 'Internal Server Error'})
