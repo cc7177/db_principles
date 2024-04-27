@@ -79,7 +79,7 @@ app.post('/api/addVehicle', (req, res) => {
     const Mileage=req.body.mileage;
 
     db.query('INSERT INTO Vehicles (licenseplate, make, model, year, color, vehicletype, status, mileage) '
-           + 'VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)', [LicensePlate, Make, Model, Year, Color, VehicleType, Status, Mileage], (err, results) => {
+           + 'VALUES ($1,$2,$3,$4,$5,$6,$7,$8)', [LicensePlate, Make, Model, Year, Color, VehicleType, Status, Mileage], (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
             res.status(500).json({error: 'Internal Server Error'})
