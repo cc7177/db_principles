@@ -37,12 +37,24 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '/index.html'));
   });
 
+app.get('/customers', function(req, res) {
+    res.sendFile(path.join(__dirname, '/customers.html'));
+  });
+
 app.get('/add_vehicle_form', function(req, res) {
     res.sendFile(path.join(__dirname, '/add_vehicle.html'));
   });
 
+app.get('/add_customer_form', function(req, res) {
+    res.sendFile(path.join(__dirname, '/add_customer.html'));
+  });
+
 app.get('/update_vehicle_form', function(req, res) {
     res.sendFile(path.join(__dirname, '/update_vehicle.html'));
+  });
+
+app.get('/update_customer_form', function(req, res) {
+    res.sendFile(path.join(__dirname, '/update_customer.html'));
   });
 
 app.get('/api/get_vehicles', (req, res) => {
@@ -56,9 +68,31 @@ app.get('/api/get_vehicles', (req, res) => {
     });
 });
 
+app.get('/api/get_customers', (req, res) => {
+    db.query('SELECT * FROM customers', (err, results) => {
+        if(err) {
+            console.error('Error executing query...', err);
+            res.status(500).json({error: 'Internal Server Error'})
+            return;
+        }
+        res.json(results);
+    });
+});
+
 
 app.get('/api/get_vehicle', (req, res) => {
     db.query('SELECT * FROM vehicles WHERE VehicleID=$1', [req.query.id], (err, results) => {
+        if(err) {
+            console.error('Error executing query...', err);
+            res.status(500).json({error: 'Internal Server Error'})
+            return;
+        }
+        res.json(results);
+    });
+});
+
+app.get('/api/get_customer', (req, res) => {
+    db.query('SELECT * FROM customers WHERE customerid=$1', [req.query.id], (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
             res.status(500).json({error: 'Internal Server Error'})
@@ -89,6 +123,25 @@ app.post('/api/addVehicle', (req, res) => {
     res.redirect('/');
 });
 
+app.post('/api/addCustomer', (req, res) => {
+    const FirstName=req.body.firstname;
+    const LastName=req.body.lastname;
+    const DriverLicense=req.body.driverlicensenumber;
+    const Email=req.body.email;
+    const Phone=req.body.phone;
+    const Address=req.body.address;
+
+    db.query('INSERT INTO customers (firstname, lastname, driverlicensenumber, email, phone, address) '
+           + 'VALUES ($1,$2,$3,$4,$5,$6)', [FirstName, LastName, DriverLicense, Email, Phone, Address], (err, results) => {
+        if(err) {
+            console.error('Error executing query...', err);
+            res.status(500).json({error: 'Internal Server Error'})
+            return;
+        }
+    });
+    res.redirect('/customers');
+});
+
 app.post('/api/updateVehicle', (req, res) => {
     const VehicleID=req.body.vehicleID;
     const LicensePlate=req.body.licensePlate;
@@ -111,10 +164,43 @@ app.post('/api/updateVehicle', (req, res) => {
     res.redirect('/');
 });
 
+app.post('/api/updateCustomer', (req, res) => {
+    const CustomerID=req.body.customerID;
+    const FirstName=req.body.firstname;
+    const LastName=req.body.lastname;
+    const DriverLicense=req.body.driverlicensenumber;
+    const Email=req.body.email;
+    const Phone=req.body.phone;
+    const Address=req.body.address;
+
+    db.query('UPDATE Vehicles SET firstname=$1, lastname=$2, driverlicensenumber=$3, email=$4, phone=$5, address=$6 WHERE customerid=$7'
+             , [FirstName, LastName, DriverLicense, Email, Phone, Address, CustomerID], (err, results) => {
+        if(err) {
+            console.error('Error executing query...', err);
+            res.status(500).json({error: 'Internal Server Error'})
+            return;
+        }
+    });
+    res.redirect('/customers');
+});
+
 app.delete('/api/removeVehicle', (req, res) => {
     const VehicleID=req.query.id;
 
     db.query('DELETE FROM Vehicles WHERE VehicleID=$1', [VehicleID], (err, results) => {
+        if(err) {
+            console.error('Error executing query...', err);
+            res.status(500).json({error: 'Internal Server Error'})
+            return;
+        }
+    });
+    return;
+});
+
+app.delete('/api/removeCustomer', (req, res) => {
+    const CustomerID=req.query.id;
+
+    db.query('DELETE FROM customers WHERE customerid=$1', [CustomerID], (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
             res.status(500).json({error: 'Internal Server Error'})
