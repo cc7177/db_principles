@@ -39,9 +39,9 @@
         <script>
         
         // Function to fetch and display entries
-        async function fetchVehicles() {
-            const response = await fetch('/api/get_vehicles');
-            const data = await response.json();
+        function fetchVehicles() {
+            const response = fetch('/api/get_vehicles');
+            const data = response.json();
             const entriesList = document.querySelector('#vehicleid_dropdown option');
             data.rows.forEach(entry => {
                 const newOption = document.createElement('option');
