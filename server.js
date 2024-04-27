@@ -241,7 +241,7 @@ app.post('/api/updateCustomer', (req, res) => {
 
 app.post('/api/updateRental', (req, res) => {
     const RentalID=req.body.rentalID;
-    const VehicleID=req.body.vehicleID;
+    const VehicleID=req.body.vehicleid;
     const CustomerID=req.body.customerid;
     const StartDate=req.body.startdate;
     const EndDate=req.body.enddate;
