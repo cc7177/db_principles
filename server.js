@@ -173,7 +173,7 @@ app.post('/api/updateCustomer', (req, res) => {
     const Phone=req.body.phone;
     const Address=req.body.address;
 
-    db.query('UPDATE Vehicles SET firstname=$1, lastname=$2, driverlicensenumber=$3, email=$4, phone=$5, address=$6 WHERE customerid=$7'
+    db.query('UPDATE customers SET firstname=$1, lastname=$2, driverlicensenumber=$3, email=$4, phone=$5, address=$6 WHERE customerid=$7'
              , [FirstName, LastName, DriverLicense, Email, Phone, Address, CustomerID], (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
