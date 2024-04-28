@@ -86,7 +86,7 @@ li a:hover:not(.active) {
        
         // Function to fetch and display entries
         async function fetchEntries() {
-            const response = await fetch('/api/get_customers');
+            const response = await fetch('/api/get/customers');
             const data = await response.json();
             const entriesList = document.querySelector('#customerTable tbody');
             entriesList.innerHTML = ''; // Clear previous entries

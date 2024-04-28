@@ -70,7 +70,7 @@ app.get('/update_rental_form', function(req, res) {
   });
 
 
-app.get('/api/:table', (req, res) => {
+app.get('/api/get/:table', (req, res) => {
     db.query(`SELECT * FROM ${req.params}`, (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
