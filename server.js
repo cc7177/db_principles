@@ -82,7 +82,9 @@ app.get('/api/get/:table', (req, res) => {
 });
 
 app.get('/api/:table/:id', (req, res) => {
-    db.query(`SELECT * FROM $1 WHERE $1id=$2`, [req.params.table, req.params.id], (err, results) => {
+
+    const keys = Object.keys(req.body);
+    db.query(`SELECT * FROM $1 WHERE $2=$3`, [req.params.table, keys[0], req.body[keys[0]]], (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
             res.status(500).json({error: 'Internal Server Error'})
