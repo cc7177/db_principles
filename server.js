@@ -124,9 +124,35 @@ app.post('/api/updateRecord/:table', (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
       return;
     }
-    res.redirect('/');
+    res.redirect(`/${tableName}`);
   });
 });
+
+app.post('/api/createRecord/:table', (req, res) => {
+    const tableName = req.params.table;
+  
+    // insert columns
+    const insertColumns = Object.keys(req.body);
+  
+    const placeHolderArray = updateColumns.map((column, index) => `$${index + 1}`).join(', ');
+  
+    // Values array for the query
+    const parameterValues = insertColumns.map(column => req.body[column]);
+    parameterValues.push(primaryKeyValue);
+  
+    const query = `INSERT INTO ${tableName} (${insertColumns}) VALUES (${placeHolderArray})`;
+  
+    console.log(query);
+  
+    db.query(query, parameterValues, (err, results) => {
+      if (err) {
+        console.error('Error executing query...', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+        return;
+      }
+      res.redirect(`/${tableName}`);
+    });
+  });
 
 app.post('/api/addVehicle', (req, res) => {
     const LicensePlate=req.body.licensePlate;

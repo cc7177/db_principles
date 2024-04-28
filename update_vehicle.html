@@ -10,7 +10,8 @@
 <body>
     <h1>Update Vehicle</h1>
     <form action="/api/updateVehicle" id="update_form" method="POST"> 
-        <input type="hidden" id="vehicleID" name="vehicleID"><br><br>
+        <input type="hidden" id="primaryKeyColumn" name="primaryKeyColumn" value="vehicleid"><br><br>
+        <input type="hidden" id="primaryKeyValue" name="primaryKeyValue"><br><br>
         
         <label for="make">Make:</label> 
         <input type="text" id="make" name="make" required><br><br> 
@@ -59,7 +60,7 @@
 
             data.rows.forEach(entry => {
                      
-            let vehicleID = document.querySelector('#vehicleID');
+            let vehicleID = document.querySelector('#primaryKeyValue');
             vehicleID.value = urlParams.get('id')
 
             let vehicleMake = document.querySelector('#make');

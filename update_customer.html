@@ -9,8 +9,9 @@
 
 <body>
     <h1>Update Customer</h1>
-    <form action="/api/updateCustomer" id="update_form" method="POST"> 
-        <input type="hidden" id="customerID" name="customerID"><br><br>
+    <form action="/api/updateRecord/customers" id="update_form" method="POST"> 
+        <input type="hidden" id="primaryKeyColumn" name="primaryKeyColumn" value="customerid"><br><br>
+        <input type="hidden" id="primaryKeyValue" name="primaryKeyValue"><br><br>
         
         <label for="firstname">First Name:</label> 
         <input type="text" id="firstname" name="firstname" required><br><br> 
@@ -43,7 +44,7 @@
 
             data.rows.forEach(entry => {
                      
-            let customerID = document.querySelector('#customerID');
+            let customerID = document.querySelector('#primaryKeyValue');
             customerID.value = urlParams.get('id')
 
             let firstName = document.querySelector('#firstname');
