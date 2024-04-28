@@ -97,6 +97,33 @@ app.get('/api/get_record/:table', (req, res) => {
     });
 });
 
+app.post('/api/updateRecord/:table', (req, res) => {
+  const tableName = req.params.table;
+  const primaryKeyColumn = req.body.primaryKeyColumn;
+  const primaryKeyValue = req.body.primaryKeyValue;
+
+  // Exclude the primary key column from the update columns
+  const updateColumns = Object.keys(req.body).filter(column => column !== primaryKeyColumn);
+
+  // Generate SET clause
+  const setClause = updateColumns.map((column, index) => `${column}=$${index + 1}`).join(', ');
+
+  // Values array for the query
+  const parameterValues = updateColumns.map(column => req.body[column]);
+  parameterValues.push(primaryKeyValue);
+
+  const query = `UPDATE ${tableName} SET ${setClause} WHERE ${primaryKeyColumn}=$${updateColumns.length + 1}`;
+
+  db.query(query, parameterValues, (err, results) => {
+    if (err) {
+      console.error('Error executing query...', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+    res.redirect('/');
+  });
+});
+
 app.post('/api/addVehicle', (req, res) => {
     const LicensePlate=req.body.licensePlate;
     const Make=req.body.make;
