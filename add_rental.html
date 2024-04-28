@@ -42,7 +42,7 @@
         fetch('/api/get_vehicles')
             .then(response => response.json())
             .then(data => {
-                const dropdown = document.querySelector('#vehicleid option');
+                const dropdown = document.querySelector('#vehicleid');
                 dropdown.innerHTML = ''; // Clear previous entries
                 data.rows.forEach(entry => {
                 const newOption = document.createElement('option');
