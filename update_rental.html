@@ -70,7 +70,8 @@
             });
         });
 
-    async function fetchRental() {
+    
+    (function() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
 
@@ -107,10 +108,7 @@
 
             });
 
-    }
-
-    // Initial fetch to populate the entries list
-    fetchRental();
+    })();
 
     
 </script>
