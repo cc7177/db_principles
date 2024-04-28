@@ -11,13 +11,7 @@
     <h1>Add Rental</h1>
     <form action="/api/addRental" method="POST"> 
 
-        <label for="vehicleid">Vehicle ID:</label> 
-        <select id="vehicleid" name="vehicleid">
-            <option value="">Select Vehicle</option>
-        </select><br><br> 
-        
-        <label for="customerid">Customer ID:</label> 
-        <input type="text" id="customerid" name="customerid" required><br><br> 
+
         
         <label for="startdate">Start Date:</label> 
         <input type="text" id="startdate" name="startdate" required><br><br>  
@@ -48,6 +42,20 @@
                 const newOption = document.createElement('option');
                 newOption.value = entry.vehicleid;
                 newOption.textContent = `${entry.licenseplate} - ${entry.make}`;
+                dropdown.appendChild(newOption);
+
+            });
+        });
+
+        fetch('/api/get_customers')
+            .then(response => response.json())
+            .then(data => {
+                const dropdown = document.querySelector('#customerid');
+                dropdown.innerHTML = ''; // Clear previous entries
+                data.rows.forEach(entry => {
+                const newOption = document.createElement('option');
+                newOption.value = entry.customerid;
+                newOption.textContent = `${entry.lastname} (${entry.driverlicensenumber})`;
                 dropdown.appendChild(newOption);
 
             });

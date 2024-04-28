@@ -13,10 +13,14 @@
         <input type="hidden" id="rentalID" name="rentalID"><br><br>
         
         <label for="vehicleid">Vehicle ID:</label> 
-        <input type="text" id="vehicleid" name="vehicleid" required><br><br> 
+        <select id="vehicleid" name="vehicleid">
+            <option value="">Select Vehicle</option>
+        </select><br><br> 
         
         <label for="customerid">Customer ID:</label> 
-        <input type="text" id="customerid" name="customerid" required><br><br> 
+        <select id="customerid" name="customerid">
+            <option value="">Select Customer</option>
+        </select><br><br> 
         
         <label for="startdate">Start Date:</label> 
         <input type="text" id="startdate" name="startdate" required><br><br> 
@@ -37,23 +41,54 @@
 </body>
 
 <script>
+    
+    fetch('/api/get_vehicles')
+            .then(response => response.json())
+            .then(data => {
+                const dropdown = document.querySelector('#vehicleid');
+                dropdown.innerHTML = ''; // Clear previous entries
+                data.rows.forEach(entry => {
+                const newOption = document.createElement('option');
+                newOption.value = entry.vehicleid;
+                newOption.textContent = `${entry.licenseplate} - ${entry.make}`;
+                dropdown.appendChild(newOption);
+
+            });
+        });
+
+        fetch('/api/get_customers')
+            .then(response => response.json())
+            .then(data => {
+                const dropdown = document.querySelector('#customerid');
+                dropdown.innerHTML = ''; // Clear previous entries
+                data.rows.forEach(entry => {
+                const newOption = document.createElement('option');
+                newOption.value = entry.customerid;
+                newOption.textContent = `${entry.lastname} (${entry.driverlicensenumber})`;
+                dropdown.appendChild(newOption);
+
+            });
+        });
+
     async function fetchRental() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
 
         const response = await fetch(`/api/get_rental?id=${urlParams.get('id')}`);
         const data = await response.json();
-
+        const vehicle_dl = document.querySelector('#vehicleid');
+        const customer_dl = document.querySelector('#customerid');
+        
             data.rows.forEach(entry => {
                      
             let RentalID = document.querySelector('#rentalID');
             RentalID.value = urlParams.get('id')
+            
+            const selected_vehicle = vehicle_dl.querySelector(`option[value="${entry.vehicleid}"]`);
+            selected_vehicle.selected = true;
 
-            let vehicleID = document.querySelector('#vehicleid');
-            vehicleID.value = entry.vehicleid;
-
-            let customerID = document.querySelector('#customerid');
-            customerID.value = entry.customerid;
+            const selected_customer = vehicle_dl.querySelector(`option[value="${entry.customerid}"]`);
+            selected_customer.selected = true;
 
             let startDate = document.querySelector('#startdate');
             startDate.value = entry.startdate;
