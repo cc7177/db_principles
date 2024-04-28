@@ -9,8 +9,9 @@
 
 <body>
     <h1>Update Rental</h1>
-    <form action="/api/updateRental" id="update_form" method="POST"> 
-        <input type="hidden" id="rentalID" name="rentalID"><br><br>
+    <form action="/api/updateRecord/rentals" id="update_form" method="POST"> 
+        <input type="hidden" id="primaryKeyColumn" name="primaryKeyColumn" value="rentalid"><br><br>
+        <input type="hidden" id="primaryKeyValue" name="primaryKeyValue"><br><br>
         
         <label for="vehicleid">Vehicle ID:</label> 
         <select id="vehicleid" name="vehicleid">
@@ -86,7 +87,7 @@
         
                 data.rows.forEach(entry => {
                         
-                let RentalID = document.querySelector('#rentalID');
+                let RentalID = document.querySelector('#primaryKeyValue');
                 RentalID.value = urlParams.get('id')
                 
                 const selected_vehicle = vehicle_dl.querySelector(`option[value="${entry.vehicleid}"]`);
