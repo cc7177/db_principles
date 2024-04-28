@@ -70,6 +70,17 @@ app.get('/update_rental_form', function(req, res) {
   });
 
 
+app.get('/api/:table', (req, res) => {
+    db.query(`SELECT * FROM ${req.params}`, (err, results) => {
+        if(err) {
+            console.error('Error executing query...', err);
+            res.status(500).json({error: 'Internal Server Error'})
+            return;
+        }
+        res.json(results);
+    });
+});
+
 app.get('/api/get_vehicles', (req, res) => {
     db.query('SELECT * FROM vehicles', (err, results) => {
         if(err) {
