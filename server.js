@@ -114,6 +114,8 @@ app.post('/api/updateRecord/:table', (req, res) => {
 
   const query = `UPDATE ${tableName} SET ${setClause} WHERE ${primaryKeyColumn}=$${updateColumns.length + 1}`;
 
+  console.log(query);
+
   db.query(query, parameterValues, (err, results) => {
     if (err) {
       console.error('Error executing query...', err);
