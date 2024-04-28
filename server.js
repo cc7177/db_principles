@@ -71,7 +71,7 @@ app.get('/update_rental_form', function(req, res) {
 
 
 app.get('/api/get/:table', (req, res) => {
-    db.query(`SELECT * FROM ${req.params}`, (err, results) => {
+    db.query(`SELECT * FROM ${req.params.table}`, (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
             res.status(500).json({error: 'Internal Server Error'})
