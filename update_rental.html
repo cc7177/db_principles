@@ -41,8 +41,13 @@
 </body>
 
 <script>
+
     
-    fetch('/api/get_vehicles')
+    (function() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        fetch('/api/get_vehicles')
             .then(response => response.json())
             .then(data => {
                 const dropdown = document.querySelector('#vehicleid');
@@ -54,7 +59,8 @@
                 dropdown.appendChild(newOption);
 
             });
-        });
+        })
+        .then(
 
         fetch('/api/get_customers')
             .then(response => response.json())
@@ -68,12 +74,9 @@
                 dropdown.appendChild(newOption);
 
             });
-        });
+        }))
+        .then(
 
-    
-    (function() {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
         
         fetch(`/api/get_rental?id=${urlParams.get('id')}`)
             .then(response => response.json())
@@ -109,7 +112,7 @@
 
                 });
 
-    });
+    }));
 })();
 
     
