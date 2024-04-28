@@ -41,7 +41,7 @@
         <script>
         
         // Function to fetch and display entries
-        fetch('/api/get_vehicles')
+        fetch('/api/get/vehicles')
             .then(response => response.json())
             .then(data => {
                 const dropdown = document.querySelector('#vehicleid');
@@ -55,7 +55,7 @@
             });
         });
 
-        fetch('/api/get_customers')
+        fetch('/api/get/customers')
             .then(response => response.json())
             .then(data => {
                 const dropdown = document.querySelector('#customerid');

@@ -71,7 +71,7 @@ app.get('/update_rental_form', function(req, res) {
 
 
 app.get('/api/get/:table', (req, res) => {
-    db.query(`SELECT * FROM ${req.params.table}`, (err, results) => {
+    db.query('SELECT * FROM $1', [req.params.table], (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
             res.status(500).json({error: 'Internal Server Error'})
@@ -81,53 +81,8 @@ app.get('/api/get/:table', (req, res) => {
     });
 });
 
-app.get('/api/get_vehicles', (req, res) => {
-    db.query('SELECT * FROM vehicles', (err, results) => {
-        if(err) {
-            console.error('Error executing query...', err);
-            res.status(500).json({error: 'Internal Server Error'})
-            return;
-        }
-        res.json(results);
-    });
-});
-
-app.get('/api/get_customers', (req, res) => {
-    db.query('SELECT * FROM customers', (err, results) => {
-        if(err) {
-            console.error('Error executing query...', err);
-            res.status(500).json({error: 'Internal Server Error'})
-            return;
-        }
-        res.json(results);
-    });
-});
-
-app.get('/api/get_rentals', (req, res) => {
-    db.query('SELECT * FROM rentals', (err, results) => {
-        if(err) {
-            console.error('Error executing query...', err);
-            res.status(500).json({error: 'Internal Server Error'})
-            return;
-        }
-        res.json(results);
-    });
-});
-
-
-app.get('/api/get_vehicle', (req, res) => {
-    db.query('SELECT * FROM vehicles WHERE VehicleID=$1', [req.query.id], (err, results) => {
-        if(err) {
-            console.error('Error executing query...', err);
-            res.status(500).json({error: 'Internal Server Error'})
-            return;
-        }
-        res.json(results);
-    });
-});
-
-app.get('/api/get_customer', (req, res) => {
-    db.query('SELECT * FROM customers WHERE customerid=$1', [req.query.id], (err, results) => {
+app.get('/api/:table/:id', (req, res) => {
+    db.query(`SELECT * FROM $1 WHERE $1id=$2`, [req.params.table, req.params.id], (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
             res.status(500).json({error: 'Internal Server Error'})
