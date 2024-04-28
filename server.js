@@ -72,6 +72,7 @@ app.get('/update_rental_form', function(req, res) {
 
 app.get('/api/get/:table', (req, res) => {
     if (Object.keys(req.body)) {
+        const keys = Object.keys(req.body);
         db.query(`SELECT * FROM $1 WHERE $2=$3`, [req.params.table, keys[0], req.body[keys[0]]], (err, results) => {
             if(err) {
                 console.error('Error executing query...', err);
