@@ -70,7 +70,7 @@ app.get('/update_rental_form', function(req, res) {
   });
 
 
-app.get('/api/get/:table', (req, res) => {
+app.get('/api/get_table/:table', (req, res) => {
     db.query('SELECT * FROM $1', [req.params.table], (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
@@ -81,7 +81,7 @@ app.get('/api/get/:table', (req, res) => {
     });
 });
 
-app.get('/api/get/:table/:id', (req, res) => {
+app.get('/api/get_record/:table', (req, res) => {
     const keys = Object.keys(req.body);
     db.query(`SELECT * FROM $1 WHERE $2=$3`, [req.params.table, keys[0], req.body[keys[0]]], (err, results) => {
         if(err) {
