@@ -74,41 +74,43 @@
     (function() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-
-        const response = await fetch(`/api/get_rental?id=${urlParams.get('id')}`);
-        const data = await response.json();
-        const vehicle_dl = document.querySelector('#vehicleid');
-        const customer_dl = document.querySelector('#customerid');
         
-            data.rows.forEach(entry => {
-                     
-            let RentalID = document.querySelector('#rentalID');
-            RentalID.value = urlParams.get('id')
-            
-            const selected_vehicle = vehicle_dl.querySelector(`option[value="${entry.vehicleid}"]`);
-            selected_vehicle.selected = true;
+        fetch(`/api/get_rental?id=${urlParams.get('id')}`)
+            .then(response => response.json())
+            .then(data => {
+                const vehicle_dl = document.querySelector('#vehicleid');
+                const customer_dl = document.querySelector('#customerid');
+        
+                data.rows.forEach(entry => {
+                        
+                let RentalID = document.querySelector('#rentalID');
+                RentalID.value = urlParams.get('id')
+                
+                const selected_vehicle = vehicle_dl.querySelector(`option[value="${entry.vehicleid}"]`);
+                selected_vehicle.selected = true;
 
-            const selected_customer = vehicle_dl.querySelector(`option[value="${entry.customerid}"]`);
-            selected_customer.selected = true;
+                const selected_customer = vehicle_dl.querySelector(`option[value="${entry.customerid}"]`);
+                selected_customer.selected = true;
 
-            let startDate = document.querySelector('#startdate');
-            startDate.value = entry.startdate;
+                let startDate = document.querySelector('#startdate');
+                startDate.value = entry.startdate;
 
-            let endDate = document.querySelector('#enddate');
-            endDate.value = entry.enddate;
+                let endDate = document.querySelector('#enddate');
+                endDate.value = entry.enddate;
 
-            let actualEndDate = document.querySelector('#actualenddate');
-            actualEndDate.value = entry.actualenddate;
+                let actualEndDate = document.querySelector('#actualenddate');
+                actualEndDate.value = entry.actualenddate;
 
-            let dailyRate = document.querySelector('#dailyrate');
-            dailyRate.value = entry.dailyrate;
+                let dailyRate = document.querySelector('#dailyrate');
+                dailyRate.value = entry.dailyrate;
 
-            let totalCost = document.querySelector('#totalcost');
-            totalCost.value = entry.totalcost;
+                let totalCost = document.querySelector('#totalcost');
+                totalCost.value = entry.totalcost;
 
-            });
+                });
 
-    })();
+    });
+})();
 
     
 </script>
