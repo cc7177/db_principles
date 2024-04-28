@@ -71,28 +71,24 @@ app.get('/update_rental_form', function(req, res) {
 
 
 app.get('/api/get/:table', (req, res) => {
-    db.query('SELECT * FROM $1', [req.params.table], (err, results) => {
-        if(err) {
-            console.error('Error executing query...', err);
-            res.status(500).json({error: 'Internal Server Error'})
-            return;
-        }
-        res.json(results);
-    });
-});
-
-app.get('/api/get/:table/:id', (req, res) => {
-
-    const keys = Object.keys(req.body);
-    db.query(`SELECT * FROM $1 WHERE $2=$3`, [req.params.table, keys[0], req.body[keys[0]]], (err, results) => {
-        if(err) {
-            console.error('Error executing query...', err);
-            res.status(500).json({error: 'Internal Server Error'})
-            return;
-        }
-        res.json(results);
-    });
-});
+    if (Object.keys(req.body)) {
+        db.query(`SELECT * FROM $1 WHERE $2=$3`, [req.params.table, keys[0], req.body[keys[0]]], (err, results) => {
+            if(err) {
+                console.error('Error executing query...', err);
+                res.status(500).json({error: 'Internal Server Error'});
+                return;
+            }
+            res.json(results);
+        })} else {
+            db.query('SELECT * FROM $1', [req.params.table], (err, results) => {
+                if(err) {
+                    console.error('Error executing query...', err);
+                    res.status(500).json({error: 'Internal Server Error'})
+                    return;
+                }
+            res.json(results);
+        })
+    }});
 
 app.get('/api/get_rental', (req, res) => {
     db.query('SELECT * FROM rentals WHERE rentalid=$1', [req.query.id], (err, results) => {
