@@ -97,17 +97,6 @@ app.get('/api/get_record/:table', (req, res) => {
     });
 });
 
-app.get('/api/get_rental', (req, res) => {
-    db.query('SELECT * FROM rentals WHERE rentalid=$1', [req.query.id], (err, results) => {
-        if(err) {
-            console.error('Error executing query...', err);
-            res.status(500).json({error: 'Internal Server Error'})
-            return;
-        }
-        res.json(results);
-    });
-});
-
 app.post('/api/addVehicle', (req, res) => {
     const LicensePlate=req.body.licensePlate;
     const Make=req.body.make;
