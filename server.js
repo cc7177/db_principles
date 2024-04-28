@@ -105,7 +105,7 @@ app.post('/api/updateRecord/:table', (req, res) => {
   const excludedColumns = [primaryKeyColumn, 'primaryKeyColumn', 'primaryKeyValue']
 
   // Exclude the primary key column from the update columns
-  const updateColumns = Object.keys(req.body).filter(column => !excludedColumns.inclues(column));
+  const updateColumns = Object.keys(req.body).filter(column => !excludedColumns.includes(column));
 
   // Generate SET clause
   const setClause = updateColumns.map((column, index) => `${column}=$${index + 1}`).join(', ');
