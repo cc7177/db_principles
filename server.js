@@ -134,7 +134,7 @@ app.post('/api/createRecord/:table', (req, res) => {
     // insert columns
     const insertColumns = Object.keys(req.body);
   
-    const placeHolderArray = updateColumns.map((column, index) => `$${index + 1}`).join(', ');
+    const placeHolderArray = insertColumns.map((column, index) => `$${index + 1}`).join(', ');
   
     // Values array for the query
     const parameterValues = insertColumns.map(column => req.body[column]);
