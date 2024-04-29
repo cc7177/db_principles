@@ -48,7 +48,7 @@
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
 
-        fetch('/api/get_table/vehicles')
+        fetch('/api/getTable/vehicles')
             .then(response => response.json())
             .then(data => {
                 const dropdown = document.querySelector('#vehicleid');
@@ -63,7 +63,7 @@
         })
         .then(
 
-        fetch('/api/get_table/customers')
+        fetch('/api/getTable/customers')
             .then(response => response.json())
             .then(data => {
                 const dropdown = document.querySelector('#customerid');
@@ -79,7 +79,7 @@
         .then(
 
         
-        fetch(`/api/get_record/rentals?column=rentalid&value=${urlParams.get('id')}`)
+        fetch(`/api/getRecord/rentals?column=rentalid&value=${urlParams.get('id')}`)
             .then(response => response.json())
             .then(data => {
                 const vehicle_dl = document.querySelector('#vehicleid');

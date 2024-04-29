@@ -39,7 +39,7 @@
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
 
-        const response = await fetch(`/api/get_record/customers?column=customerid&value=${urlParams.get('id')}`);
+        const response = await fetch(`/api/getRecord/customers?column=customerid&value=${urlParams.get('id')}`);
         const data = await response.json();
 
             data.rows.forEach(entry => {

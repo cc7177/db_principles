@@ -9,7 +9,7 @@
 
 <body>
     <h1>Add Rental</h1>
-    <form action="/api/addRental" method="POST"> 
+    <form action="/api/createRecord/rentals" method="POST"> 
 
         <label for="vehicleid">Vehicle ID:</label> 
         <select id="vehicleid" name="vehicleid">
@@ -41,7 +41,7 @@
         <script>
         
         // Function to fetch and display entries
-        fetch('/api/get_table/vehicles')
+        fetch('/api/getTable/vehicles')
             .then(response => response.json())
             .then(data => {
                 const dropdown = document.querySelector('#vehicleid');
@@ -55,7 +55,7 @@
             });
         });
 
-        fetch('/api/get_table/customers')
+        fetch('/api/getTable/customers')
             .then(response => response.json())
             .then(data => {
                 const dropdown = document.querySelector('#customerid');

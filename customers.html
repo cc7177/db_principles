@@ -54,9 +54,9 @@ li a:hover:not(.active) {
 </head>
 <body>
     <ul>
-  <li><a href="/">Vehicle Inventory</a></li>
-  <li><a class="active" href="/customers">Customers</a></li>
-  <li><a href="/rentals">Rentals</a></li>
+  <li><a href="/getPage/vehicles">Vehicle Inventory</a></li>
+  <li><a class="active" href="/getPage/customers">Customers</a></li>
+  <li><a href="/getPage/rentals">Rentals</a></li>
 </ul>
     <table id="customerTable">
         <thead id="">
@@ -75,18 +75,18 @@ li a:hover:not(.active) {
 
         </tbody>
     </table>
-    <button type="submit" onclick="window.location.href='/add_customer_form'">Add Customer</button>
+    <button type="submit" onclick="window.location.href='/getForm/add/customer'">Add Customer</button>
 </body>
 
     <script>
 
         function getCustomerForm() {
-            fetch('/add_customer_form');
+            fetch('/getForm/add/customer');
         }
        
         // Function to fetch and display entries
         async function fetchEntries() {
-            const response = await fetch('/api/get_table/customers');
+            const response = await fetch('/api/getTable/customers');
             const data = await response.json();
             const entriesList = document.querySelector('#customerTable tbody');
             entriesList.innerHTML = ''; // Clear previous entries
@@ -110,7 +110,7 @@ li a:hover:not(.active) {
 
         // Function to delete an existing entry
         function deleteEntry(id) {
-            fetch(`/api/removeCustomer?id=${id}`, {
+            fetch(`/api/removeRecord/customer?column=customerid&value=${id}`, {
                 method: 'DELETE'
             });
             fetchEntries(); // Refresh the list after deletion

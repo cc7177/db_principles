@@ -55,7 +55,7 @@
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
 
-        const response = await fetch(`/api/get_record/vehicles?column=vehicleid&value=${urlParams.get('id')}`);
+        const response = await fetch(`/api/getRecord/vehicles?column=vehicleid&value=${urlParams.get('id')}`);
         const data = await response.json();
 
             data.rows.forEach(entry => {
