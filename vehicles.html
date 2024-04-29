@@ -76,13 +76,13 @@ li a:hover:not(.active) {
 
         </tbody>
     </table>
-    <button type="submit" onclick="window.location.href='/add_vehicle_form'">Add Vehicle</button>
+    <button type="submit" onclick="window.location.href='/getForm/add/vehicle'">Add Vehicle</button>
 </body>
 
     <script>
 
         function getVehicleForm() {
-            fetch('/add_vehicle_form');
+            fetch('/getForm/add/vehicle');
         }
        
         // Function to fetch and display entries
@@ -112,7 +112,7 @@ li a:hover:not(.active) {
 
         // Function to delete an existing entry
         function deleteEntry(id) {
-            fetch(`/api/removeVehicle?id=${id}`, {
+            fetch(`/api/removeRecord/vehicles?column=vehicleid&valueid=${id}`, {
                 method: 'DELETE'
             });
             fetchEntries(); // Refresh the list after deletion

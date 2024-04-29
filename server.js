@@ -145,7 +145,7 @@ app.delete('/api/removeRecord/:table', function(req, res) {
             return;
         }
     });
-    return;
+    res.redirect(`/getPage/${tableName}`);
 
   });
 
