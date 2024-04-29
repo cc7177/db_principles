@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle Rental Database (VRD)</title>
-    <h1>VRD - Vehicle Inventory </h1>
+    <h1>Vehicle Rental Database (VRD)</h1>
 <style>
     table {
         width: 100%;
@@ -54,72 +54,10 @@ li a:hover:not(.active) {
 </head>
 <body>
     <ul>
-  <li><a class="active" href="/">Vehicle Inventory</a></li>
-  <li><a href="/customers">Customers</a></li>
-  <li><a href="/rentals">Rentals</a></li>
+  <li><a class="active" href="/getPage/vehicles">Vehicle Inventory</a></li>
+  <li><a href="/getPage/customers">Customers</a></li>
+  <li><a href="/getPage/rentals">Rentals</a></li>
 </ul>
-    <table id="rentalTable">
-        <thead id="">
-            <tr>
-                <th>Vehicle ID</th>
-                <th>License Plate</th>
-                <th>Make</th>
-                <th>Model</th>
-                <th>Color</th>
-                <th>Vehicle Type</th>
-                <th>Status</th>
-                <th>Mileage</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-    </table>
-    <button type="submit" onclick="window.location.href='/add_vehicle_form'">Add Vehicle</button>
 </body>
-
-    <script>
-
-        function getVehicleForm() {
-            fetch('/add_vehicle_form');
-        }
-       
-        // Function to fetch and display entries
-        async function fetchEntries() {
-            const response = await fetch('/api/get_table/vehicles');
-            const data = await response.json();
-            const entriesList = document.querySelector('#rentalTable tbody');
-            entriesList.innerHTML = ''; // Clear previous entries
-            data.rows.forEach(entry => {
-                const newRow = document.createElement('tr');
-                newRow.innerHTML = `
-                <td>${entry.vehicleid}</td>
-                <td>${entry.licenseplate}</td>
-                <td>${entry.make}</td>
-                <td>${entry.model}</td>
-                <td>${entry.color}</td>
-                <td>${entry.vehicletype}</td>
-                <td>${entry.status}</td>
-                <td>${entry.mileage}</td>
-                <td><a href='/update_vehicle_form?id=${entry.vehicleid}'>Update</a></td>
-                <td><a href='javascript:deleteEntry(${entry.vehicleid})'>Delete</a></td>
-                `
-                entriesList.appendChild(newRow);
-            });
-        }
-
-
-        // Function to delete an existing entry
-        function deleteEntry(id) {
-            fetch(`/api/removeVehicle?id=${id}`, {
-                method: 'DELETE'
-            });
-            fetchEntries(); // Refresh the list after deletion
-        }
-
-        // Initial fetch to populate the entries list
-        fetchEntries();
-    </script>
 </body>
 </html>
