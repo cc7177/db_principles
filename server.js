@@ -33,6 +33,10 @@ db.connect((err) => {
 });
 
 //Routes
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, '/index.html'));
+  });
+
 app.get('/getPage/:table', function(req, res) {
     res.sendFile(path.join(__dirname, `/${req.params.table}.html`));
   });
@@ -100,7 +104,7 @@ app.post('/api/updateRecord/:table', (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
       return;
     }
-    res.redirect(`/${tableName}`);
+    res.redirect(`/getPage/${tableName}`);
   });
 });
 
@@ -125,7 +129,7 @@ app.post('/api/createRecord/:table', (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
         return;
       }
-      res.redirect(`/${tableName}`);
+      res.redirect(`/getPage/${tableName}`);
     });
   });
 
