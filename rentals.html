@@ -112,7 +112,7 @@ li a:hover:not(.active) {
 
         // Function to delete an existing entry
         function deleteEntry(id) {
-            fetch(`/api/removeRecord/rentals?column=rentalid&value=id=${id}`, {
+            fetch(`/api/removeRecord/rentals?column=rentalid&value=${id}`, {
                 method: 'DELETE'
             });
             fetchEntries(); // Refresh the list after deletion
