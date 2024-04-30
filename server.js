@@ -138,6 +138,8 @@ app.delete('/api/removeRecord/:table', function(req, res) {
     const columnName = req.query.column;
     const columnValue = req.query.value;
 
+    console.log(`DELETE FROM ${tableName} WHERE ${columnName}=${columnValue}`)
+
     db.query(`DELETE FROM ${tableName} WHERE ${columnName}=$1`, [columnValue], (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
