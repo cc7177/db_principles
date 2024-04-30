@@ -102,7 +102,7 @@ li a:hover:not(.active) {
                 <td>${entry.vehicletype}</td>
                 <td>${entry.status}</td>
                 <td>${entry.mileage}</td>
-                <td><a href='/update_vehicle_form?id=${entry.vehicleid}'>Update</a></td>
+                <td><a href='/getForm/update/vehicle?id=${entry.vehicleid}'>Update</a></td>
                 <td><a href='javascript:deleteEntry(${entry.vehicleid})'>Delete</a></td>
                 `
                 entriesList.appendChild(newRow);

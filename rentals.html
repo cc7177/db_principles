@@ -102,7 +102,7 @@ li a:hover:not(.active) {
                 <td>${entry.actualenddate}</td>
                 <td>${entry.dailyrate}</td>
                 <td>${entry.totalcost}</td>
-                <td><a href='/update_Rental_form?id=${entry.rentalid}'>Update</a></td>
+                <td><a href='/getForm/update/rental?id=${entry.rentalid}'>Update</a></td>
                 <td><a href='javascript:deleteEntry(${entry.rentalid})'>Delete</a></td>
                 `
                 entriesList.appendChild(newRow);

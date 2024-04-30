@@ -100,7 +100,7 @@ li a:hover:not(.active) {
                 <td>${entry.email}</td>
                 <td>${entry.phone}</td>
                 <td>${entry.address}</td>
-                <td><a href='/update_customer_form?id=${entry.customerid}'>Update</a></td>
+                <td><a href='/getForm/update/customer?id=${entry.customerid}'>Update</a></td>
                 <td><a href='javascript:deleteEntry(${entry.customerid})'>Delete</a></td>
                 `
                 entriesList.appendChild(newRow);
