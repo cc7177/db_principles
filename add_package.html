@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Rental Package</title>
+</head>
+
+<body>
+    <h1>Add Rental Package</h1>
+    <form action="/api/createRecord/packages" method="POST"> 
+
+        <label for="name">Package Name:</label> 
+        <input type="text" id="name" name="name" required><br><br>  
+        
+        <label for="description">Package Description:</label> 
+        <input type="text" id="description" name="description" required><br><br> 
+
+        <label for="base_price">Base Price:</label> 
+        <input type="text" id="base_price" name="base_price"><br><br>
+
+        <label for="included_mileage">Included Mileage:</label> 
+        <input type="text" id="included_mileage" name="included_mileage"><br><br>
+
+        <label for="vehicleid">Vehicle:</label> 
+        <select id="vehicleid" name="vehicleid">
+            <option value="">Select Vehicle</option>
+        </select><br><br> 
+        
+        <input type="submit" value="Submit"> </form>
+
+
+        <script>
+        
+            // Function to fetch and display entries
+            fetch('/api/getTable/vehicles')
+                .then(response => response.json())
+                .then(data => {
+                    const dropdown = document.querySelector('#vehicleid');
+                    dropdown.innerHTML = ''; // Clear previous entries
+                    data.rows.forEach(entry => {
+                    const newOption = document.createElement('option');
+                    newOption.value = entry.vehicleid;
+                    newOption.textContent = `${entry.licenseplate} - ${entry.make}`;
+                    dropdown.appendChild(newOption);
+    
+                });
+            });
+
+        </script>
+
+</body>
+
+</html>

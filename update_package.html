@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Rental Package</title>
+</head>
+
+<body>
+    <h1>Update Rental Package</h1>
+    <form action="/api/updateRecord/packages" id="update_form" method="POST"> 
+        <input type="hidden" id="primaryKeyColumn" name="primaryKeyColumn" value="packageid"><br><br>
+        <input type="hidden" id="primaryKeyValue" name="primaryKeyValue"><br><br>
+        
+        <label for="name">Package Name:</label> 
+        <input type="text" id="name" name="name" required><br><br>  
+        
+        <label for="description">Package Description:</label> 
+        <input type="text" id="description" name="description" required><br><br> 
+
+        <label for="base_price">Base Price:</label> 
+        <input type="text" id="base_price" name="base_price"><br><br>
+
+        <label for="included_mileage">Included Mileage:</label> 
+        <input type="text" id="included_mileage" name="included_mileage"><br><br>
+
+        <label for="vehicleid">Vehicle:</label> 
+        <select id="vehicleid" name="vehicleid">
+            <option value="">Select Vehicle</option>
+        </select><br><br> 
+        
+        <input type="submit" value="Submit"> </form>
+</body>
+
+<script>
+(function() {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+
+  fetch('/api/getTable/vehicles')
+    .then(response => response.json())
+    .then(data => {
+      const dropdown = document.querySelector('#vehicleid');
+      dropdown.innerHTML = ''; // Clear previous entries
+
+      data.rows.forEach(entry => {
+        const newOption = document.createElement('option');
+        newOption.value = entry.vehicleid;
+        newOption.textContent = `${entry.licenseplate} - ${entry.make}`;
+        dropdown.appendChild(newOption);
+      });
+    })
+    .then(() => fetch(`/api/getRecord/packages?column=packageid&value=${urlParams.get('id')}`))
+    .then(response => response.json())
+    .then(data => {
+      const vehicle_dl = document.querySelector('#vehicleid');
+
+      data.rows.forEach(entry => {
+        let PackageID = document.querySelector('#primaryKeyValue');
+        PackageID.value = urlParams.get('id');
+
+        const selected_vehicle = vehicle_dl.querySelector(`option[value="${entry.vehicleid}"]`);
+        selected_vehicle.selected = true;
+
+        let name = document.querySelector('#name');
+        name.value = entry.name;
+
+        let description = document.querySelector('#description');
+        description.value = entry.description;
+
+        let base_price = document.querySelector('#base_price');
+        base_price.value = entry.base_price;
+
+        let included_mileage = document.querySelector('#included_mileage');
+        included_mileage.value = entry.included_mileage;
+
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+})();
+    
+</script>
+
+</html>

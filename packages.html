@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Rental Database (VRD)</title>
+    <h1>VRD - Rental Packages</h1>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    
+    ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #04AA6D;
+}
+</style>
+</head>
+<body>
+    <ul>
+  <li><a href="/getPage/vehicles">Vehicle Inventory</a></li>
+  <li><a href="/getPage/customers">Customers</a></li>
+  <li><a href="/getPage/rentals">Rentals</a></li>
+  <li><a href="/getPage/rental_locations">Rental Locations</a></li>
+  <li><a class="active" href="/getPage/packages">Rental Packages</a></li>
+</ul>
+    <table id="packageTable">
+        <thead id="">
+            <tr>
+                <th>Package ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Base Price</th>
+                <th>Included Mileage</th>
+                <th>Vehicle ID</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <button type="submit" onclick="window.location.href='/getForm/add/package'">Add Package</button>
+</body>
+
+    <script>
+
+        function getPackageForm() {
+            fetch('/getForm/add/package');
+        }
+       
+        // Function to fetch and display entries
+        async function fetchEntries() {
+            const response = await fetch('/api/getTable/packages');
+            const data = await response.json();
+            const entriesList = document.querySelector('#packageTable tbody');
+            entriesList.innerHTML = ''; // Clear previous entries
+            data.rows.forEach(entry => {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                <td>${entry.packageid}</td>
+                <td>${entry.name}</td>
+                <td>${entry.description}</td>
+                <td>${entry.base_price}</td>
+                <td>${entry.included_mileage}</td>
+                <td>${entry.vehicle_id}</td>
+                <td><a href='/getForm/update/package?id=${entry.packageid}'>Update</a></td>
+                <td><a href='javascript:deleteEntry(${entry.packageid})'>Delete</a></td>
+                `
+                entriesList.appendChild(newRow);
+            });
+        }
+
+
+        // Function to delete an existing entry
+        function deleteEntry(id) {
+            fetch(`/api/removeRecord/packages?column=packageid&value=${id}`, {
+                method: 'DELETE'
+            });
+            fetchEntries(); // Refresh the list after deletion
+        }
+
+        // Initial fetch to populate the entries list
+        fetchEntries();
+    </script>
+</body>
+</html>
