@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Rental Location</title>
+</head>
+
+<body>
+    <h1>Update Rental Location</h1>
+    <form action="/api/updateRecord/rental_locations" id="update_form" method="POST"> 
+        <input type="hidden" id="primaryKeyColumn" name="primaryKeyColumn" value="location_id"><br><br>
+        <input type="hidden" id="primaryKeyValue" name="primaryKeyValue"><br><br>
+        
+        <label for="name">Location Name:</label> 
+        <input type="text" id="name" name="name" required><br><br> 
+        
+        <label for="address">Location Address:</label> 
+        <input type="text" id="address" name="address" required><br><br> 
+        
+        <label for="phone">Location Phone #:</label> 
+        <input type="text" id="phone" name="phone" required><br><br> 
+        
+        <input type="submit" value="Submit"> </form>
+</body>
+
+<script>
+    async function fetchVehicle() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        const response = await fetch(`/api/getRecord/rental_locations?column=location_id&value=${urlParams.get('id')}`);
+        const data = await response.json();
+
+            data.rows.forEach(entry => {
+                     
+            let locationID = document.querySelector('#primaryKeyValue');
+            locationID.value = urlParams.get('id')
+
+            let locationName = document.querySelector('#name');
+            locationName.value = entry.name;
+
+            let locationAddress = document.querySelector('#address');
+            locationAddress.value = entry.address;
+
+            let locationPhone = document.querySelector('#phone');
+            locationPhone.value = entry.phone;
+            
+            });
+
+    }
+
+    // Initial fetch to populate the entries list
+    fetchVehicle();
+
+    
+</script>
+
+</html>
