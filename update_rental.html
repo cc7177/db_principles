@@ -44,76 +44,71 @@
 <script>
 
     
-    (function() {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
+(function() {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
 
-        fetch('/api/getTable/vehicles')
-            .then(response => response.json())
-            .then(data => {
-                const dropdown = document.querySelector('#vehicleid');
-                dropdown.innerHTML = ''; // Clear previous entries
-                data.rows.forEach(entry => {
-                const newOption = document.createElement('option');
-                newOption.value = entry.vehicleid;
-                newOption.textContent = `${entry.licenseplate} - ${entry.make}`;
-                dropdown.appendChild(newOption);
+  fetch('/api/getTable/vehicles')
+    .then(response => response.json())
+    .then(data => {
+      const dropdown = document.querySelector('#vehicleid');
+      dropdown.innerHTML = ''; // Clear previous entries
 
-            });
-        })
-        .then(
+      data.rows.forEach(entry => {
+        const newOption = document.createElement('option');
+        newOption.value = entry.vehicleid;
+        newOption.textContent = `${entry.licenseplate} - ${entry.make}`;
+        dropdown.appendChild(newOption);
+      });
+    })
+    .then(() => fetch('/api/getTable/customers'))
+    .then(response => response.json())
+    .then(data => {
+      const dropdown = document.querySelector('#customerid');
+      dropdown.innerHTML = ''; // Clear previous entries
 
-        fetch('/api/getTable/customers')
-            .then(response => response.json())
-            .then(data => {
-                const dropdown = document.querySelector('#customerid');
-                dropdown.innerHTML = ''; // Clear previous entries
-                data.rows.forEach(entry => {
-                const newOption = document.createElement('option');
-                newOption.value = entry.customerid;
-                newOption.textContent = `${entry.lastname} (${entry.driverlicensenumber})`;
-                dropdown.appendChild(newOption);
+      data.rows.forEach(entry => {
+        const newOption = document.createElement('option');
+        newOption.value = entry.customerid;
+        newOption.textContent = `${entry.lastname} (${entry.driverlicensenumber})`;
+        dropdown.appendChild(newOption);
+      });
+    })
+    .then(() => fetch(`/api/getRecord/rentals?column=rentalid&value=${urlParams.get('id')}`))
+    .then(response => response.json())
+    .then(data => {
+      const vehicle_dl = document.querySelector('#vehicleid');
+      const customer_dl = document.querySelector('#customerid');
 
-            });
-        }))
-        .then(
+      data.rows.forEach(entry => {
+        let RentalID = document.querySelector('#primaryKeyValue');
+        RentalID.value = urlParams.get('id');
 
-        
-        fetch(`/api/getRecord/rentals?column=rentalid&value=${urlParams.get('id')}`)
-            .then(response => response.json())
-            .then(data => {
-                const vehicle_dl = document.querySelector('#vehicleid');
-                const customer_dl = document.querySelector('#customerid');
-        
-                data.rows.forEach(entry => {
-                        
-                let RentalID = document.querySelector('#primaryKeyValue');
-                RentalID.value = urlParams.get('id')
-                
-                const selected_vehicle = vehicle_dl.querySelector(`option[value="${entry.vehicleid}"]`);
-                selected_vehicle.selected = true;
+        const selected_vehicle = vehicle_dl.querySelector(`option[value="${entry.vehicleid}"]`);
+        selected_vehicle.selected = true;
 
-                const selected_customer = customer_dl.querySelector(`option[value="${entry.customerid}"]`);
-                selected_customer.selected = true;
+        const selected_customer = customer_dl.querySelector(`option[value="${entry.customerid}"]`);
+        selected_customer.selected = true;
 
-                let startDate = document.querySelector('#startdate');
-                startDate.value = entry.startdate;
+        let startDate = document.querySelector('#startdate');
+        startDate.value = entry.startdate;
 
-                let endDate = document.querySelector('#enddate');
-                endDate.value = entry.enddate;
+        let endDate = document.querySelector('#enddate');
+        endDate.value = entry.enddate;
 
-                let actualEndDate = document.querySelector('#actualenddate');
-                actualEndDate.value = entry.actualenddate;
+        let actualEndDate = document.querySelector('#actualenddate');
+        actualEndDate.value = entry.actualenddate;
 
-                let dailyRate = document.querySelector('#dailyrate');
-                dailyRate.value = entry.dailyrate;
+        let dailyRate = document.querySelector('#dailyrate');
+        dailyRate.value = entry.dailyrate;
 
-                let totalCost = document.querySelector('#totalcost');
-                totalCost.value = entry.totalcost;
-
-                });
-
-    }));
+        let totalCost = document.querySelector('#totalcost');
+        totalCost.value = entry.totalcost;
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 })();
 
     
