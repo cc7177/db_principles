@@ -52,7 +52,7 @@ fetch('/api/getTable/states')
         dropdown.appendChild(newOption);
       });
     })
-    .then(() => fetch(`/api/getRecord/rental_locations?column=location_idd&value=${urlParams.get('id')}`))
+    .then(() => fetch(`/api/getRecord/rental_locations?column=location_id&value=${urlParams.get('id')}`))
     .then(response => response.json())
     .then(data => {
       const state_dl = document.querySelector('#stateid');
