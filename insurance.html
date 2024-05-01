@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle Rental Database (VRD)</title>
-    <h1>VRD - Vehicle Inventory </h1>
+    <h1>VRD - Insurance</h1>
 <style>
     table {
         width: 100%;
@@ -54,25 +54,23 @@ li a:hover:not(.active) {
 </head>
 <body>
     <ul>
-        <li><a class="active" href="/getPage/vehicles">Vehicle Inventory</a></li>
+        <li><a href="/getPage/vehicles">Vehicle Inventory</a></li>
         <li><a href="/getPage/customers">Customers</a></li>
         <li><a href="/getPage/rentals">Rentals</a></li>
         <li><a href="/getPage/rental_locations">Rental Locations</a></li>
         <li><a href="/getPage/packages">Rental Packages</a></li>
         <li><a href="/getPage/employees">Employees</a></li>
-        <li><a href="/getPage/insurance">Insurance</a></li>
+        <li><a class="active" href="/getPage/insurance">Insurance</a></li>
 </ul>
-    <table id="rentalTable">
+    <table id="insuranceTable">
         <thead id="">
             <tr>
-                <th>Vehicle ID</th>
-                <th>License Plate</th>
-                <th>Make</th>
-                <th>Model</th>
-                <th>Color</th>
-                <th>Vehicle Type</th>
-                <th>Status</th>
-                <th>Mileage</th>
+                <th>Insurance ID</th>
+                <th>Provider Name</th>
+                <th>Policy #</th>
+                <th>Coverage Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -80,34 +78,32 @@ li a:hover:not(.active) {
 
         </tbody>
     </table>
-    <button type="submit" onclick="window.location.href='/getForm/add/vehicle'">Add Vehicle</button>
+    <button type="submit" onclick="window.location.href='/getForm/add/insurance'">Add Insurance</button>
 </body>
 
     <script>
 
-        function getVehicleForm() {
-            fetch('/getForm/add/vehicle');
+        function getInsuranceForm() {
+            fetch('/getForm/add/insurance');
         }
        
         // Function to fetch and display entries
         async function fetchEntries() {
-            const response = await fetch('/api/getTable/vehicles');
+            const response = await fetch('/api/getTable/insurance');
             const data = await response.json();
-            const entriesList = document.querySelector('#rentalTable tbody');
+            const entriesList = document.querySelector('#insuranceTable tbody');
             entriesList.innerHTML = ''; // Clear previous entries
             data.rows.forEach(entry => {
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
-                <td>${entry.vehicleid}</td>
-                <td>${entry.licenseplate}</td>
-                <td>${entry.make}</td>
-                <td>${entry.model}</td>
-                <td>${entry.color}</td>
-                <td>${entry.vehicletype}</td>
-                <td>${entry.status}</td>
-                <td>${entry.mileage}</td>
-                <td><a href='/getForm/update/vehicle?id=${entry.vehicleid}'>Update</a></td>
-                <td><a href='javascript:deleteEntry(${entry.vehicleid})'>Delete</a></td>
+                <td>${entry.insuranceid}</td>
+                <td>${entry.provider_name}</td>
+                <td>${entry.policy_number}</td>
+                <td>${entry.coverage_type}</td>
+                <td>${entry.start_date}</td>
+                <td>${entry.end_date}</td>
+                <td><a href='/getForm/update/insurance?id=${entry.insuranceid}'>Update</a></td>
+                <td><a href='javascript:deleteEntry(${entry.insuranceid})'>Delete</a></td>
                 `
                 entriesList.appendChild(newRow);
             });
@@ -116,7 +112,7 @@ li a:hover:not(.active) {
 
         // Function to delete an existing entry
         function deleteEntry(id) {
-            fetch(`/api/removeRecord/vehicles?column=vehicleid&value=${id}`, {
+            fetch(`/api/removeRecord/insurance?column=insuranceid&value=${id}`, {
                 method: 'DELETE'
             });
             fetchEntries(); // Refresh the list after deletion

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Insurance</title>
+</head>
+
+<body>
+    <h1>Add Insurance</h1>
+    <form action="/api/createRecord/insurance" method="POST"> 
+        <label for="provider_name">Provider Name:</label> 
+        <input type="text" id="provider_name" name="provider_name" required><br><br> 
+        
+        <label for="policy_number">Policy #:</label> 
+        <input type="text" id="policy_number" name="policy_number" required><br><br> 
+        
+        <label for="coverage_type">Coverage Type:</label> 
+        <input type="text" id="coverage_type" name="coverage_type" required><br><br>  
+        
+        <label for="start_date">Start Date:</label> 
+        <input type="text" id="start_date" name="start_date" required><br><br> 
+
+        <label for="end_date">End Date:</label> 
+        <input type="text" id="end_date" name="end_date" required><br><br>
+        
+        <input type="submit" value="Submit"> </form>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Employee</title>
+</head>
+
+<body>
+    <h1>Update Employee</h1>
+    <form action="/api/updateRecord/employees" id="update_form" method="POST"> 
+        <input type="hidden" id="primaryKeyColumn" name="primaryKeyColumn" value="employeeid"><br><br>
+        <input type="hidden" id="primaryKeyValue" name="primaryKeyValue"><br><br>
+        
+        <label for="first_name">First Name:</label> 
+        <input type="text" id="first_name" name="first_name" required><br><br> 
+        
+        <label for="last_name">Last Name:</label> 
+        <input type="text" id="last_name" name="last_name" required><br><br> 
+        
+        <label for="email">Email:</label> 
+        <input type="text" id="email" name="email" required><br><br> 
+
+        <label for="phone">Phone:</label> 
+        <input type="text" id="phone" name="phone" required><br><br> 
+
+        <label for="position">Position:</label> 
+        <input type="text" id="position" name="position" required><br><br> 
+
+        <label for="hire_date">Hire Date:</label> 
+        <input type="text" id="hire_date" name="hire_date" required><br><br> 
+        
+        <input type="submit" value="Submit"> </form>
+</body>
+
+<script>
+    async function fetchEmployee() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        const response = await fetch(`/api/getRecord/employees?column=employeeid&value=${urlParams.get('id')}`);
+        const data = await response.json();
+
+            data.rows.forEach(entry => {
+                     
+            let employeeID = document.querySelector('#primaryKeyValue');
+            employeeID.value = urlParams.get('id')
+
+            let first_name = document.querySelector('#first_name');
+            first_name.value = entry.first_name;
+
+            let last_name = document.querySelector('#last_name');
+            last_name.value = entry.last_name;
+
+            let email = document.querySelector('#email');
+            email.value = entry.email;
+
+            let phone = document.querySelector('#phone');
+            phone.value = entry.phone;
+
+            let position = document.querySelector('#position');
+            position.value = entry.position;
+
+            let hire_date = document.querySelector('#hire_date');
+            hire_date.value = entry.hire_date;
+
+            });
+
+    }
+
+    // Initial fetch to populate the entries list
+    fetchEmployee();
+
+    
+</script>
+
+</html>

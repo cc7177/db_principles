@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Insurance</title>
+</head>
+
+<body>
+    <h1>Update Insurance</h1>
+    <form action="/api/updateRecord/insurance" id="update_form" method="POST"> 
+        <input type="hidden" id="primaryKeyColumn" name="primaryKeyColumn" value="insuranceid"><br><br>
+        <input type="hidden" id="primaryKeyValue" name="primaryKeyValue"><br><br>
+        
+        <label for="provider_name">Provider Name:</label> 
+        <input type="text" id="provider_name" name="provider_name" required><br><br> 
+        
+        <label for="policy_number">Policy #:</label> 
+        <input type="text" id="policy_number" name="policy_number" required><br><br> 
+        
+        <label for="coverage_type">Coverage Type:</label> 
+        <input type="text" id="coverage_type" name="coverage_type" required><br><br> 
+        
+        <label for="start_date">Start Date:</label> 
+        <input type="text" id="start_date" name="start_date" required><br><br> 
+
+        <label for="start_date">End Date:</label> 
+        <input type="text" id="start_date" name="start_date" required><br><br> 
+        
+        <input type="submit" value="Submit"> </form>
+</body>
+
+<script>
+    async function fetchInsurance() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        const response = await fetch(`/api/getRecord/insurance?column=insuranceid&value=${urlParams.get('id')}`);
+        const data = await response.json();
+
+            data.rows.forEach(entry => {
+                     
+            let insuranceID = document.querySelector('#primaryKeyValue');
+            insuranceID.value = urlParams.get('id')
+
+            let provider_name = document.querySelector('#provider_name');
+            provider_name.value = entry.provider_name;
+
+            let policy_number = document.querySelector('#policy_number');
+            policy_number.value = entry.policy_number;
+
+            let coverage_type = document.querySelector('#coverage_type');
+            coverage_type.value = entry.coverage_type;
+
+            let start_date = document.querySelector('#start_date');
+            start_date.value = entry.start_date;
+
+            let end_date = document.querySelector('#end_date');
+            end_date.value = entry.end_date;
+
+            });
+
+    }
+
+    // Initial fetch to populate the entries list
+    fetchInsurance();
+
+    
+</script>
+
+</html>
