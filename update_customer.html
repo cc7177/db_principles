@@ -30,47 +30,67 @@
 
         <label for="address">Address:</label> 
         <input type="text" id="address" name="address" required><br><br> 
+
+        <label for="stateid">State:</label> 
+        <select id="stateid" name="stateid">
+            <option value="">Select State</option>
+        </select><br><br> 
+
+        <label for="zipcode">Address:</label> 
+        <input type="text" id="zipcode" name="zipcode" required><br><br> 
         
         <input type="submit" value="Submit"> </form>
 </body>
 
 <script>
-    async function fetchCustomer() {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
 
-        const response = await fetch(`/api/getRecord/customers?column=customerid&value=${urlParams.get('id')}`);
-        const data = await response.json();
+(function() {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
 
-            data.rows.forEach(entry => {
-                     
-            let customerID = document.querySelector('#primaryKeyValue');
-            customerID.value = urlParams.get('id')
+fetch('/api/getTable/states')
+    .then(response => response.json())
+    .then(data => {
+      const dropdown = document.querySelector('#stateid');
+      dropdown.innerHTML = ''; // Clear previous entries
 
-            let firstName = document.querySelector('#firstname');
-            firstName.value = entry.firstname;
+      data.rows.forEach(entry => {
+        const newOption = document.createElement('option');
+        newOption.value = entry.customerid;
+        newOption.textContent = `${entry.name}`;
+        dropdown.appendChild(newOption);
+      });
+    })
+    .then(() => fetch(`/api/getRecord/customers?column=customeridd&value=${urlParams.get('id')}`))
+    .then(response => response.json())
+    .then(data => {
+      const state_dl = document.querySelector('#stateid');
 
-            let lastName = document.querySelector('#lastname');
-            lastName.value = entry.lastname;
+      data.rows.forEach(entry => {
+        let RentalID = document.querySelector('#primaryKeyValue');
+        RentalID.value = urlParams.get('id');
 
-            let driverLicense = document.querySelector('#driverlicensenumber');
-            driverLicense.value = entry.driverlicensenumber;
+        const selected_state = state_dl.querySelector(`option[value="${entry.stateid}"]`);
+        selected_state.selected = true;
 
-            let email = document.querySelector('#email');
-            email.value = entry.email;
+        let locationName = document.querySelector('#name');
+        locationName.value = entry.name;
 
-            let phone = document.querySelector('#phone');
-            phone.value = entry.phone;
+        let locationAddress = document.querySelector('#address');
+        locationAddress.value = entry.address;
 
-            let address = document.querySelector('#address');
-            address.value = entry.address;
+        let zipcode = document.querySelector('#zipcode');
+        zipcode.value = entry.zipcode;
 
-            });
+        let locationPhone = document.querySelector('#phone');
+        locationPhone.value = entry.phone;
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+})();
 
-    }
-
-    // Initial fetch to populate the entries list
-    fetchCustomer();
 
     
 </script>

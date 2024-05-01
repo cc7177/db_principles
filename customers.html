@@ -72,6 +72,8 @@ li a:hover:not(.active) {
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Address</th>
+                <th>State ID</th>
+                <th>Zip Code</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -104,6 +106,8 @@ li a:hover:not(.active) {
                 <td>${entry.email}</td>
                 <td>${entry.phone}</td>
                 <td>${entry.address}</td>
+                <td>${entry.stateid}</td>
+                <td>${entry.zipcode}</td>
                 <td><a href='/getForm/update/customer?id=${entry.customerid}'>Update</a></td>
                 <td><a href='javascript:deleteEntry(${entry.customerid})'>Delete</a></td>
                 `

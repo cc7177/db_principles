@@ -18,41 +18,69 @@
         
         <label for="address">Location Address:</label> 
         <input type="text" id="address" name="address" required><br><br> 
-        
-        <label for="phone">Location Phone #:</label> 
+
+        <label for="phone">Phone #:</label> 
         <input type="text" id="phone" name="phone" required><br><br> 
+
+        <label for="stateid">State:</label> 
+        <select id="stateid" name="stateid">
+            <option value="">Select State</option>
+        </select><br><br> 
+        
+        <label for="zipcode">Zip Code:</label> 
+        <input type="text" id="zipcode" name="zipcode" required><br><br> 
         
         <input type="submit" value="Submit"> </form>
 </body>
 
 <script>
-    async function fetchVehicle() {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
 
-        const response = await fetch(`/api/getRecord/rental_locations?column=location_id&value=${urlParams.get('id')}`);
-        const data = await response.json();
+(function() {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
 
-            data.rows.forEach(entry => {
-                     
-            let locationID = document.querySelector('#primaryKeyValue');
-            locationID.value = urlParams.get('id')
+fetch('/api/getTable/states')
+    .then(response => response.json())
+    .then(data => {
+      const dropdown = document.querySelector('#stateid');
+      dropdown.innerHTML = ''; // Clear previous entries
 
-            let locationName = document.querySelector('#name');
-            locationName.value = entry.name;
+      data.rows.forEach(entry => {
+        const newOption = document.createElement('option');
+        newOption.value = entry.customerid;
+        newOption.textContent = `${entry.name}`;
+        dropdown.appendChild(newOption);
+      });
+    })
+    .then(() => fetch(`/api/getRecord/rental_locations?column=location_idd&value=${urlParams.get('id')}`))
+    .then(response => response.json())
+    .then(data => {
+      const state_dl = document.querySelector('#stateid');
 
-            let locationAddress = document.querySelector('#address');
-            locationAddress.value = entry.address;
+      data.rows.forEach(entry => {
+        let RentalID = document.querySelector('#primaryKeyValue');
+        RentalID.value = urlParams.get('id');
 
-            let locationPhone = document.querySelector('#phone');
-            locationPhone.value = entry.phone;
-            
-            });
+        const selected_state = state_dl.querySelector(`option[value="${entry.stateid}"]`);
+        selected_state.selected = true;
 
-    }
+        let locationName = document.querySelector('#name');
+        locationName.value = entry.name;
 
-    // Initial fetch to populate the entries list
-    fetchVehicle();
+        let locationAddress = document.querySelector('#address');
+        locationAddress.value = entry.address;
+
+        let zipcode = document.querySelector('#zipcode');
+        zipcode.value = entry.zipcode;
+
+        let locationPhone = document.querySelector('#phone');
+        locationPhone.value = entry.phone;
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+})();
 
     
 </script>

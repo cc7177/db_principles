@@ -68,6 +68,8 @@ li a:hover:not(.active) {
                 <th>Location ID</th>
                 <th>Name</th>
                 <th>Address</th>
+                <th>State ID</th>
+                <th>Zip Code</th>
                 <th>Phone</th>
                 <th>Action</th>
             </tr>
@@ -97,6 +99,8 @@ li a:hover:not(.active) {
                 <td>${entry.location_id}</td>
                 <td>${entry.name}</td>
                 <td>${entry.address}</td>
+                <td>${entry.stateid}</td>
+                <td>${entry.zipcode}</td>
                 <td>${entry.phone}</td>
                 <td><a href='/getForm/update/rental_location?id=${entry.location_id}'>Update</a></td>
                 <td><a href='javascript:deleteEntry(${entry.location_id})'>Delete</a></td>
