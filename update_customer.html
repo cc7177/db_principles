@@ -56,7 +56,7 @@ fetch('/api/getTable/states')
 
       data.rows.forEach(entry => {
         const newOption = document.createElement('option');
-        newOption.value = entry.customerid;
+        newOption.value = entry.stateid;
         newOption.textContent = `${entry.name}`;
         dropdown.appendChild(newOption);
       });
