@@ -91,7 +91,19 @@ app.post('/api/updateRecord/:table', (req, res) => {
   const setClause = updateColumns.map((column, index) => `${column}=$${index + 1}`).join(', ');
 
   // Values array for the query
-  const parameterValues = updateColumns.map(column => req.body[column]);
+  const parameterValues = updateColumns.map(column => { 
+    const input_col = req.body[column];
+    if (typeof input_col === 'string'){
+
+      return input_col.toUpperCase();
+
+    } else {
+
+      return input_col;
+      
+    }
+  
+  });
   parameterValues.push(primaryKeyValue);
 
   const query = `UPDATE ${tableName} SET ${setClause} WHERE ${primaryKeyColumn}=$${updateColumns.length + 1}`;
@@ -117,7 +129,19 @@ app.post('/api/createRecord/:table', (req, res) => {
     const placeHolderArray = insertColumns.map((column, index) => `$${index + 1}`).join(', ');
   
     // Values array for the query
-    const parameterValues = insertColumns.map(column => req.body[column]);
+    const parameterValues = insertColumns.map(column =>{ 
+      const input_col = req.body[column];
+      if (typeof input_col === 'string'){
+
+        return input_col.toUpperCase();
+
+      } else {
+
+        return input_col;
+
+      }
+    
+    });
   
     const query = `INSERT INTO ${tableName} (${insertColumns}) VALUES (${placeHolderArray})`;
   
