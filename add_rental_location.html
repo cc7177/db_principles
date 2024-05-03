@@ -60,7 +60,7 @@
                     data.rows.forEach(entry => {
                     const newOption = document.createElement('option');
                     newOption.value = entry.employeeid;
-                    newOption.textContent = `${employeeid} - ${entry.first_name} ${entry.last_name}`;
+                    newOption.textContent = `${entry.employeeid} - ${entry.first_name} ${entry.last_name}`;
                     dropdown.appendChild(newOption);
     
                 });

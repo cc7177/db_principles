@@ -29,6 +29,11 @@
         
         <label for="zipcode">Zip Code:</label> 
         <input type="text" id="zipcode" name="zipcode" required><br><br> 
+
+        <label for="managerid">Location Manager:</label> 
+        <select id="managerid" name="managerid">
+            <option value="">Select Manager</option>
+        </select><br><br> 
         
         <input type="submit" value="Submit"> </form>
 </body>
@@ -49,6 +54,19 @@ fetch('/api/getTable/states')
         const newOption = document.createElement('option');
         newOption.value = entry.stateid;
         newOption.textContent = `${entry.name}`;
+        dropdown.appendChild(newOption);
+      });
+    })
+    .then(() => fetch('/api/getTable/public.v_general_managers'))
+    .then(response => response.json())
+    .then(data => {
+      const dropdown = document.querySelector('#managerid');
+      dropdown.innerHTML = ''; // Clear previous entries
+
+      data.rows.forEach(entry => {
+        const newOption = document.createElement('option');
+        newOption.value = entry.employeeid;
+        newOption.textContent = `${entry.employee_id} - ${entry.first_name} ${entry.last_name}`;
         dropdown.appendChild(newOption);
       });
     })
