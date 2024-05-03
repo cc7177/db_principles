@@ -30,6 +30,16 @@
         <label for="actualenddate">Actual End Date:</label> 
         <input type="text" id="actualenddate" name="actualenddate"><br><br>
 
+        <label for="packageid">Package ID:</label> 
+        <select id="packageid" name="packageid">
+            <option value="">Select Package</option>
+        </select><br><br> 
+
+        <label for="employeeid">Sales Associate:</label> 
+        <select id="employeeid" name="employeeid">
+            <option value="">Select Associate</option>
+        </select><br><br> 
+
         <label for="dailyrate">Daily Rate:</label> 
         <input type="text" id="dailyrate" name="dailyrate" required><br><br> 
         
@@ -61,6 +71,34 @@
                 const newOption = document.createElement('option');
                 newOption.value = entry.customerid;
                 newOption.textContent = `${entry.lastname} (${entry.driverlicensenumber})`;
+                dropdown.appendChild(newOption);
+
+            });
+        });
+
+        fetch('/api/getTable/public.v_sales_associate')
+            .then(response => response.json())
+            .then(data => {
+                const dropdown = document.querySelector('#employeeid');
+                dropdown.innerHTML = ''; // Clear previous entries
+                data.rows.forEach(entry => {
+                const newOption = document.createElement('option');
+                newOption.value = entry.employeeid;
+                newOption.textContent = `${entry.employeeid} - ${entry.first_name} ${entry.last_name}`;
+                dropdown.appendChild(newOption);
+
+            });
+        });
+
+        fetch('/api/getTable/packages')
+            .then(response => response.json())
+            .then(data => {
+                const dropdown = document.querySelector('#packageid');
+                dropdown.innerHTML = ''; // Clear previous entries
+                data.rows.forEach(entry => {
+                const newOption = document.createElement('option');
+                newOption.value = entry.packageid;
+                newOption.textContent = `${entry.name}`;
                 dropdown.appendChild(newOption);
 
             });
