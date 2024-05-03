@@ -62,7 +62,7 @@
     .then(() => fetch(`/api/getRecord/employees?column=employeeid&value=${urlParams.get('id')}`))
     .then(response => response.json())
     .then(data => {
-      const location_dl = document.querySelector('#locationid');
+      const location_dl = document.querySelector('#rental_location');
 
       data.rows.forEach(entry => {
         let employeeID = document.querySelector('#primaryKeyValue');

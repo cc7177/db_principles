@@ -36,7 +36,7 @@
             <option value="">Select State</option>
         </select><br><br> 
 
-        <label for="zipcode">Address:</label> 
+        <label for="zipcode">Zip Code:</label> 
         <input type="text" id="zipcode" name="zipcode" required><br><br> 
         
         <input type="submit" value="Submit"> </form>
@@ -67,23 +67,32 @@ fetch('/api/getTable/states')
       const state_dl = document.querySelector('#stateid');
 
       data.rows.forEach(entry => {
-        let RentalID = document.querySelector('#primaryKeyValue');
-        RentalID.value = urlParams.get('id');
+        let customerID = document.querySelector('#primaryKeyValue');
+        customerID.value = urlParams.get('id')
 
-        const selected_state = state_dl.querySelector(`option[value="${entry.stateid}"]`);
+        const selected_state = state_dl.querySelector(`option[value="${entry.state_id}"]`);
         selected_state.selected = true;
 
-        let locationName = document.querySelector('#name');
-        locationName.value = entry.name;
+        let first_name = document.querySelector('#first_name');
+        first_name.value = entry.first_name;
 
-        let locationAddress = document.querySelector('#address');
-        locationAddress.value = entry.address;
+        let last_name = document.querySelector('#last_name');
+        last_name.value = entry.last_name;
+
+        let driverlicensenumber = document.querySelector('#driverlicensenumber');
+        driverlicensenumber.value = entry.driverlicensenumber;
+
+        let email = document.querySelector('#email');
+        email.value = entry.email;
+
+        let phone = document.querySelector('#phone');
+        phone.value = entry.phone;
+
+        let address = document.querySelector('#address');
+        address.value = entry.address;
 
         let zipcode = document.querySelector('#zipcode');
         zipcode.value = entry.zipcode;
-
-        let locationPhone = document.querySelector('#phone');
-        locationPhone.value = entry.phone;
       });
     })
     .catch(error => {
