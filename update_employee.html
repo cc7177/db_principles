@@ -49,7 +49,7 @@
   fetch('/api/getTable/rental_locations')
     .then(response => response.json())
     .then(data => {
-      const dropdown = document.querySelector('#location_id');
+      const dropdown = document.querySelector('#rental_location');
       dropdown.innerHTML = ''; // Clear previous entries
 
       data.rows.forEach(entry => {

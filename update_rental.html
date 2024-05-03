@@ -81,7 +81,7 @@
         dropdown.appendChild(newOption);
       });
     })
-    .then(() => fetch('/api/getTable/public.v_sales_associate'))
+    .then(() => fetch('/api/getTable/public.v_sales_associates'))
     .then(response => response.json())
     .then(data => {
       const dropdown = document.querySelector('#sales_associate');
