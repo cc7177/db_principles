@@ -30,13 +30,13 @@
         <label for="actualenddate">Actual End Date:</label> 
         <input type="text" id="actualenddate" name="actualenddate"><br><br>
 
-        <label for="packageid">Package ID:</label> 
-        <select id="packageid" name="packageid">
+        <label for="package_id">Package ID:</label> 
+        <select id="package_id" name="package_id">
             <option value="">Select Package</option>
         </select><br><br> 
 
-        <label for="employeeid">Sales Associate:</label> 
-        <select id="employeeid" name="employeeid">
+        <label for="sales_associate">Sales Associate:</label> 
+        <select id="sales_associate" name="sales_associate">
             <option value="">Select Associate</option>
         </select><br><br> 
 
@@ -79,7 +79,7 @@
         fetch('/api/getTable/public.v_sales_associate')
             .then(response => response.json())
             .then(data => {
-                const dropdown = document.querySelector('#employeeid');
+                const dropdown = document.querySelector('#sales_associate');
                 dropdown.innerHTML = ''; // Clear previous entries
                 data.rows.forEach(entry => {
                 const newOption = document.createElement('option');
@@ -93,7 +93,7 @@
         fetch('/api/getTable/packages')
             .then(response => response.json())
             .then(data => {
-                const dropdown = document.querySelector('#packageid');
+                const dropdown = document.querySelector('#package_id');
                 dropdown.innerHTML = ''; // Clear previous entries
                 data.rows.forEach(entry => {
                 const newOption = document.createElement('option');

@@ -32,13 +32,13 @@
         <label for="actualenddate">Actual End Date:</label> 
         <input type="text" id="actualenddate" name="actualenddate" required><br><br> 
 
-        <label for="packageid">Package ID:</label> 
-        <select id="packageid" name="packageid">
+        <label for="package_id">Package ID:</label> 
+        <select id="package_id" name="package_id">
             <option value="">Select Package</option>
         </select><br><br> 
 
-        <label for="employeeid">Sales Associate:</label> 
-        <select id="employeeid" name="employeeid">
+        <label for="sales_associate">Sales Associate:</label> 
+        <select id="sales_associate" name="sales_associate">
             <option value="">Select Associate</option>
         </select><br><br> 
 
@@ -84,12 +84,12 @@
     .then(() => fetch('/api/getTable/public.v_sales_associate'))
     .then(response => response.json())
     .then(data => {
-      const dropdown = document.querySelector('#employeeid');
+      const dropdown = document.querySelector('#sales_associate');
       dropdown.innerHTML = ''; // Clear previous entries
 
       data.rows.forEach(entry => {
         const newOption = document.createElement('option');
-        newOption.value = entry.employeeid;
+        newOption.value = entry.sales_associate;
         newOption.textContent = `${entry.name})`;
         dropdown.appendChild(newOption);
       });
@@ -97,7 +97,7 @@
     .then(() => fetch('/api/getTable/packages'))
     .then(response => response.json())
     .then(data => {
-      const dropdown = document.querySelector('#packageid');
+      const dropdown = document.querySelector('#package_id');
       dropdown.innerHTML = ''; // Clear previous entries
 
       data.rows.forEach(entry => {
@@ -112,8 +112,8 @@
     .then(data => {
       const vehicle_dl = document.querySelector('#vehicleid');
       const customer_dl = document.querySelector('#customerid');
-      const sales_assoc_dl = document.querySelector('#employeeid');
-      const packages_dl = document.querySelector('#packageid');
+      const sales_assoc_dl = document.querySelector('#sales_associate');
+      const packages_dl = document.querySelector('#package_id');
 
       data.rows.forEach(entry => {
         let RentalID = document.querySelector('#primaryKeyValue');
@@ -125,10 +125,10 @@
         const selected_customer = customer_dl.querySelector(`option[value="${entry.customerid}"]`);
         selected_customer.selected = true;
 
-        const selected_sales_assoc = sales_assoc_dl.querySelector(`option[value="${entry.employeeid}"]`);
+        const selected_sales_assoc = sales_assoc_dl.querySelector(`option[value="${entry.sales_associate}"]`);
         selected_sales_assoc.selected = true;
 
-        const selected_package = packages_dl.querySelector(`option[value="${entry.packageid}"]`);
+        const selected_package = packages_dl.querySelector(`option[value="${entry.package_id}"]`);
         selected_package.selected = true;
 
         let startDate = document.querySelector('#startdate');
