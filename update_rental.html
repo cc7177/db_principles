@@ -89,7 +89,7 @@
 
       data.rows.forEach(entry => {
         const newOption = document.createElement('option');
-        newOption.value = entry.sales_associate;
+        newOption.value = entry.employeeid;
         newOption.textContent = `${entry.name})`;
         dropdown.appendChild(newOption);
       });
