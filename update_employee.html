@@ -30,49 +30,71 @@
 
         <label for="hire_date">Hire Date:</label> 
         <input type="text" id="hire_date" name="hire_date" required><br><br> 
+
+        <label for="rental_location">Rental Location:</label> 
+        <select id="rental_location" name="rental_location">
+            <option value="">Select Rental Location</option>
+        </select><br><br> 
         
         <input type="submit" value="Submit"> </form>
 </body>
 
 <script>
-    async function fetchEmployee() {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-
-        const response = await fetch(`/api/getRecord/employees?column=employeeid&value=${urlParams.get('id')}`);
-        const data = await response.json();
-
-            data.rows.forEach(entry => {
-                     
-            let employeeID = document.querySelector('#primaryKeyValue');
-            employeeID.value = urlParams.get('id')
-
-            let first_name = document.querySelector('#first_name');
-            first_name.value = entry.first_name;
-
-            let last_name = document.querySelector('#last_name');
-            last_name.value = entry.last_name;
-
-            let email = document.querySelector('#email');
-            email.value = entry.email;
-
-            let phone = document.querySelector('#phone');
-            phone.value = entry.phone;
-
-            let position = document.querySelector('#position');
-            position.value = entry.position;
-
-            let hire_date = document.querySelector('#hire_date');
-            hire_date.value = entry.hire_date;
-
-            });
-
-    }
-
-    // Initial fetch to populate the entries list
-    fetchEmployee();
 
     
+(function() {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+
+  fetch('/api/getTable/rental_locations')
+    .then(response => response.json())
+    .then(data => {
+      const dropdown = document.querySelector('#location_id');
+      dropdown.innerHTML = ''; // Clear previous entries
+
+      data.rows.forEach(entry => {
+        const newOption = document.createElement('option');
+        newOption.value = entry.location_id;
+        newOption.textContent = `${entry.name}`;
+        dropdown.appendChild(newOption);
+      });
+    })
+    .then(() => fetch(`/api/getRecord/employees?column=employeeid&value=${urlParams.get('id')}`))
+    .then(response => response.json())
+    .then(data => {
+      const location_dl = document.querySelector('#locationid');
+
+      data.rows.forEach(entry => {
+        let employeeID = document.querySelector('#primaryKeyValue');
+        employeeID.value = urlParams.get('id')
+
+        const selected_location = location_dl.querySelector(`option[value="${entry.location_id}"]`);
+        selected_location.selected = true;
+
+        let first_name = document.querySelector('#first_name');
+        first_name.value = entry.first_name;
+
+        let last_name = document.querySelector('#last_name');
+        last_name.value = entry.last_name;
+
+        let email = document.querySelector('#email');
+        email.value = entry.email;
+
+        let phone = document.querySelector('#phone');
+        phone.value = entry.phone;
+
+        let position = document.querySelector('#position');
+        position.value = entry.position;
+
+        let hire_date = document.querySelector('#hire_date');
+        hire_date.value = entry.hire_date;
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+})();
+  
 </script>
 
 </html>

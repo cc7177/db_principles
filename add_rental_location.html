@@ -27,6 +27,11 @@
 
         <label for="phone">Phone #:</label> 
         <input type="text" id="phone" name="phone"><br><br>
+
+        <label for="managerid">Location Manager:</label> 
+        <select id="managerid" name="managerid">
+            <option value="">Select Manager</option>
+        </select><br><br> 
         
         <input type="submit" value="Submit"> </form>
 
@@ -42,6 +47,20 @@
                     const newOption = document.createElement('option');
                     newOption.value = entry.stateid;
                     newOption.textContent = `${entry.name}`;
+                    dropdown.appendChild(newOption);
+    
+                });
+            });
+
+            fetch('/api/getTable/public.v_general_managers')
+                .then(response => response.json())
+                .then(data => {
+                    const dropdown = document.querySelector('#managerid');
+                    dropdown.innerHTML = ''; // Clear previous entries
+                    data.rows.forEach(entry => {
+                    const newOption = document.createElement('option');
+                    newOption.value = entry.employeeid;
+                    newOption.textContent = `${employeeid} - ${entry.first_name} ${entry.last_name}`;
                     dropdown.appendChild(newOption);
     
                 });

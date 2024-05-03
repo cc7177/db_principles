@@ -70,7 +70,6 @@ li a:hover:not(.active) {
                 <th>Description</th>
                 <th>Base Price</th>
                 <th>Included Mileage</th>
-                <th>Vehicle ID</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -101,7 +100,6 @@ li a:hover:not(.active) {
                 <td>${entry.description}</td>
                 <td>${entry.base_price}</td>
                 <td>${entry.included_mileage}</td>
-                <td>${entry.vehicle_id}</td>
                 <td><a href='/getForm/update/package?id=${entry.packageid}'>Update</a></td>
                 <td><a href='javascript:deleteEntry(${entry.packageid})'>Delete</a></td>
                 `

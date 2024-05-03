@@ -72,6 +72,7 @@ li a:hover:not(.active) {
                 <th>Phone</th>
                 <th>Position</th>
                 <th>Hire Date</th>
+                <th>Rental Location</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -104,6 +105,7 @@ li a:hover:not(.active) {
                 <td>${entry.phone}</td>
                 <td>${entry.position}</td>
                 <td>${entry.hire_date}</td>
+                <td>${entry.rental_location}</td>
                 <td><a href='/getForm/update/employee?id=${entry.employeeid}'>Update</a></td>
                 <td><a href='javascript:deleteEntry(${entry.employeeid})'>Delete</a></td>
                 `

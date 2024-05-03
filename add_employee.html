@@ -27,8 +27,30 @@
 
         <label for="hire_date">Hire Date:</label> 
         <input type="text" id="hire_date" name="hire_date" required><br><br> 
+
+        <label for="rental_location">Rental Location:</label> 
+        <select id="rental_location" name="rental_location">
+            <option value="">Select Rental Location</option>
+        </select><br><br> 
         
         <input type="submit" value="Submit"> </form>
+
+        <script>
+        // Function to fetch and display entries
+        fetch('/api/getTable/rental_locations')
+            .then(response => response.json())
+            .then(data => {
+                const dropdown = document.querySelector('#rental_location');
+                dropdown.innerHTML = ''; // Clear previous entries
+                data.rows.forEach(entry => {
+                const newOption = document.createElement('option');
+                newOption.value = entry.location_id;
+                newOption.textContent = `${entry.name}`;
+                dropdown.appendChild(newOption);
+
+            });
+        });
+    </script>
 </body>
 
 </html>

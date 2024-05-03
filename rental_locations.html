@@ -71,6 +71,7 @@ li a:hover:not(.active) {
                 <th>State ID</th>
                 <th>Zip Code</th>
                 <th>Phone</th>
+                <th>Location Manager</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -102,6 +103,7 @@ li a:hover:not(.active) {
                 <td>${entry.stateid}</td>
                 <td>${entry.zipcode}</td>
                 <td>${entry.phone}</td>
+                <td>${entry.managerid}</td>
                 <td><a href='/getForm/update/rental_location?id=${entry.location_id}'>Update</a></td>
                 <td><a href='javascript:deleteEntry(${entry.location_id})'>Delete</a></td>
                 `
