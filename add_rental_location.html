@@ -66,30 +66,58 @@
                 });
             });
 
-            function validatePhoneNumber(input) {
+
+const form = document.querySelector('#rental_location_form');
+
+
+function validateEmail(input) {
+  // Regular expression pattern for email address validation
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // Test the input against the email address pattern
+  if (emailPattern.test(input)) {
+    return true; // Email address is valid
+  } else {
+    return false; // Email address is invalid
+  }}
+
+function validatePhoneNumber(input) {
       
-                const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
+      const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
 
-                if (phonePattern.test(input)) {
-                    return true; 
-                } else {
-                    return false; 
-                }
-                }
+      if (phonePattern.test(input)) {
+          return true; 
+      } else {
+          return false; 
+      }};
+      
 
-                // Get the form element
-                const form = document.querySelector('#rental_location_form');
+    // Validate Phone Number
 
-                // Add event listener to the form submission
-                form.addEventListener('submit', function(event) {
-                const phoneInput = document.querySelector('#phone');
-                const phoneNumber = phoneInput.value;
+    // Add event listener to the form submission
+    form.addEventListener('submit', function(event) {
+    const phoneInput = document.querySelector('#phone');
+    const phoneNumber = phoneInput.value;
 
-                if (!validatePhoneNumber(phoneNumber)) {
-                    event.preventDefault();
-                    alert('Invalid Phone Number. Please use the format xxx-xxx-xxxx.');
-                }
-                });
+    if (!validatePhoneNumber(phoneNumber)) {
+        event.preventDefault();
+        alert('Invalid Phone Number. Please use the format xxx-xxx-xxxx.');
+    }
+    });
+
+    // Validate Email
+
+    // Add event listener to the form submission
+    form.addEventListener('submit', function(event) {
+    const emailInput = document.querySelector('#email');
+    const email = emailInput.value;
+
+    if (!validateEmail(email)) {
+        event.preventDefault();
+        alert('Invalid email. Please use the format email@domain.com');
+    }
+    });
+
 
         </script>
 

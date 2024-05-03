@@ -9,7 +9,7 @@
 
 <body>
     <h1>Add Employee</h1>
-    <form action="/api/createRecord/employees" method="POST"> 
+    <form id="employee_form" action="/api/createRecord/employees" method="POST"> 
         <label for="first_name">First Name:</label> 
         <input type="text" id="first_name" name="first_name" required><br><br> 
         
@@ -50,6 +50,58 @@
 
             });
         });
+
+const form = document.querySelector('#employee_form');
+
+
+function validateEmail(input) {
+  // Regular expression pattern for email address validation
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // Test the input against the email address pattern
+  if (emailPattern.test(input)) {
+    return true; // Email address is valid
+  } else {
+    return false; // Email address is invalid
+  }}
+
+function validatePhoneNumber(input) {
+      
+      const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
+
+      if (phonePattern.test(input)) {
+          return true; 
+      } else {
+          return false; 
+      }};
+      
+
+    // Validate Phone Number
+
+    // Add event listener to the form submission
+    form.addEventListener('submit', function(event) {
+    const phoneInput = document.querySelector('#phone');
+    const phoneNumber = phoneInput.value;
+
+    if (!validatePhoneNumber(phoneNumber)) {
+        event.preventDefault();
+        alert('Invalid Phone Number. Please use the format xxx-xxx-xxxx.');
+    }
+    });
+
+    // Validate Email
+
+    // Add event listener to the form submission
+    form.addEventListener('submit', function(event) {
+    const emailInput = document.querySelector('#email');
+    const email = emailInput.value;
+
+    if (!validateEmail(email)) {
+        event.preventDefault();
+        alert('Invalid email. Please use the format email@domain.com');
+    }
+    });
+
     </script>
 </body>
 
