@@ -32,23 +32,8 @@ db.connect((err) => {
     console.log(`Connected to ${DB_NAME}!`);
 });
 
-function convertDate(isoDate) {
-  const date = new Date(isoDate);
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate().padStart(2, '0'));
-  const year = date.getFullYear();
-
-  return `${month}-${day}-${year}`;
-}
 
 //Routes
-app.post('/convert-date', (req, res) => {
-  const isoDate = req.body.isoDate;
-  const formattedDate = convertDate(isoDate);
-
-  res.send(formattedDate);
-});
-
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '/index.html'));
   });

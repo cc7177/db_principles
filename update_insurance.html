@@ -54,10 +54,18 @@
             coverage_type.value = entry.coverage_type;
 
             let start_date = document.querySelector('#start_date');
-            start_date.value = entry.start_date;
+            start_date.value = new Date(entry.start_date).toLocaleDateString('en-US', 
+            { year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }).replace(/\//g, '-');
 
             let end_date = document.querySelector('#end_date');
-            end_date.value = entry.end_date;
+            end_date.value = new Date(entry.end_date).toLocaleDateString('en-US', 
+            { year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }).replace(/\//g, '-');
 
             });
 

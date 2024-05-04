@@ -104,7 +104,11 @@ li a:hover:not(.active) {
                 <td>${entry.email}</td>
                 <td>${entry.phone}</td>
                 <td>${entry.position}</td>
-                <td>${entry.hire_date}</td>
+                <td>${new Date(entry.hire_date).toLocaleDateString('en-US', 
+                    { year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit'
+                    }).replace(/\//g, '-')}</td>
                 <td>${entry.rental_location}</td>
                 <td><a href='/getForm/update/employee?id=${entry.employeeid}'>Update</a></td>
                 <td><a href='javascript:deleteEntry(${entry.employeeid})'>Delete</a></td>

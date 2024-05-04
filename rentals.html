@@ -103,9 +103,21 @@ li a:hover:not(.active) {
                 <td>${entry.rentalid}</td>
                 <td>${entry.vehicleid}</td>
                 <td>${entry.customerid}</td>
-                <td>${entry.startdate}</td>
-                <td>${entry.enddate}</td>
-                <td>${entry.actualenddate}</td>
+                <td>${new Date(entry.startdate).toLocaleDateString('en-US', 
+                    { year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit'
+                    }).replace(/\//g, '-')}</td>
+                    <td>${new Date(entry.enddate).toLocaleDateString('en-US', 
+                    { year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit'
+                    }).replace(/\//g, '-')}</td>
+                    <td>${new Date(entry.actualenddate).toLocaleDateString('en-US', 
+                    { year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit'
+                    }).replace(/\//g, '-')}</td>
                 <td>${entry.dailyrate}</td>
                 <td>${entry.sales_associate}</td>
                 <td>${entry.package_id}</td>

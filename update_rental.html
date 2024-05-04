@@ -179,19 +179,29 @@
         selected_package.selected = true;
 
         let startDate = document.querySelector('#startdate');
-        startDate.value = entry.startdate;
+        startDate.value = new Date(entry.startdate).toLocaleDateString('en-US', 
+          { year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+          }).replace(/\//g, '-');
 
         let endDate = document.querySelector('#enddate');
-        endDate.value = entry.enddate;
+        endDate.value = new Date(entry.enddate).toLocaleDateString('en-US', 
+          { year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+          }).replace(/\//g, '-');
 
         let actualEndDate = document.querySelector('#actualenddate');
-        actualEndDate.value = entry.actualenddate;
+        actualEndDate.value = new Date(entry.actualenddate).toLocaleDateString('en-US', 
+          { year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+          }).replace(/\//g, '-');
 
         let dailyRate = document.querySelector('#dailyrate');
         dailyRate.value = entry.dailyrate;
 
-        let totalCost = document.querySelector('#totalcost');
-        totalCost.value = entry.totalcost;
       });
     })
     .catch(error => {

@@ -100,8 +100,16 @@ li a:hover:not(.active) {
                 <td>${entry.provider_name}</td>
                 <td>${entry.policy_number}</td>
                 <td>${entry.coverage_type}</td>
-                <td>${entry.start_date}</td>
-                <td>${entry.end_date}</td>
+                <td>${new Date(entry.start_date).toLocaleDateString('en-US', 
+                    { year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit'
+                    }).replace(/\//g, '-')}</td>
+                    <td>${new Date(entry.end_date).toLocaleDateString('en-US', 
+                    { year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit'
+                    }).replace(/\//g, '-')}</td>
                 <td><a href='/getForm/update/insurance?id=${entry.insuranceid}'>Update</a></td>
                 <td><a href='javascript:deleteEntry(${entry.insuranceid})'>Delete</a></td>
                 `
