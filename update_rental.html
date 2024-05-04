@@ -199,42 +199,41 @@
     });
 })();
 
-  const form = document.querySelector('#rental_form');
+const form = document.querySelector('#update_form');
 
-  function validateDate(input) {
-  // Regular expression pattern for Date validation
-  const datePattern = /^\d{2}-\d{2}-\d{4}$/;
+function validateDate(input) {
+// Regular expression pattern for Date validation
+const datePattern = /^(\d{2})-(\d{2})-(\d{4})$/;
 
-  // Test the input against the date pattern
-  if (datePattern.test(input)) {
-      return true; // date is valid
-  } else {
-      return false; // date is invalid
-  }}
+// Test the input against the date pattern
+if (datePattern.test(input)) {
+    return true; // date is valid
+} else {
+    return false; // date is invalid
+}}
 
-  // Validate Dates
+// Validate Dates
 
-  // Add event listener to the form submission
-  form.addEventListener('submit', function(event) {
-  const startdateInput = document.querySelector('#startdate');
-  const enddateInput = document.querySelector('#enddate');
-  const actualEdInput = document.querySelector('#actualenddate');
+// Add event listener to the form submission
+form.addEventListener('submit', function(event) {
+const startdateInput = document.querySelector('#startdate');
+const enddateInput = document.querySelector('#enddate');
+const actualEdInput = document.querySelector('#actualenddate');
 
-  const dateCheck = [];
+const dateCheck = [];
 
-  field_array = [startdateInput, enddateInput, actualEdInput];
+field_array = [startdateInput, enddateInput, actualEdInput];
 
-  field_array.forEach(field => {
-      dateCheck.push(validateDate(field));
-  });
+field_array.forEach(field => {
+    dateCheck.push(validateDate(field));
+});
 
-  if (dateCheck.includes(false)) {
-  event.preventDefault();
-  alert('Invalid date. Please use the format mm-dd-yyyy');
-  }
+if (dateCheck.includes(false)) {
+event.preventDefault();
+alert('Invalid date. Please use the format mm-dd-yyyy');
+}
 
-  });
-
+});
     
 </script>
 
