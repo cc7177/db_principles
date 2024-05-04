@@ -1,41 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Employee</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Employee</title>
+  <style>
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      flex: 0 0 150px;
+      margin-right: 10px;
+    }
+    
+    .form-group input,
+    .form-group select {
+      flex: 0 0 25%;
+      padding: 5px;
+    }
+    
+    .form-group input[type="submit"] {
+      flex: 0;
+      padding: 10px 20px;
+    }
+
+    .form-group input[type="text"] {
+      flex: 0 0 25%;
+      padding: 10px 20px;
+    }
+  </style>
 </head>
-
 <body>
-    <h1>Add Employee</h1>
-    <form action="/api/createRecord/employees" method="POST"> 
-        <label for="first_name">First Name:</label> 
-        <input type="text" id="first_name" name="first_name" required><br><br> 
-        
-        <label for="last_name">Last Name:</label> 
-        <input type="text" id="last_name" name="last_name" required><br><br> 
-        
-        <label for="email">Email:</label> 
-        <input type="text" id="email" name="email" required><br><br>  
-        
-        <label for="phone">Phone:</label> 
-        <input type="text" id="phone" name="phone" required><br><br> 
+  <h1>Add Employee</h1>
+  
+  <form id="employee_form" action="/api/createRecord/employees" method="POST">
+    <div class="form-group">
+      <label for="first_name">First Name:</label>
+      <input type="text" id="first_name" name="first_name" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="last_name">Last Name:</label>
+      <input type="text" id="last_name" name="last_name" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="phone">Phone:</label>
+      <input type="text" id="phone" name="phone" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="position">Position:</label>
+      <input type="text" id="position" name="position" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="hire_date">Hire Date:</label>
+      <input type="text" id="hire_date" name="hire_date" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="rental_location">Rental Location:</label>
+      <select id="rental_location" name="rental_location">
+        <option value="">Select Rental Location</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <input type="submit" value="Submit">
+    </div>
+  </form>
 
-        <label for="position">Position:</label> 
-        <input type="text" id="position" name="position" required><br><br>
-
-        <label for="hire_date">Hire Date:</label> 
-        <input type="text" id="hire_date" name="hire_date" required><br><br> 
-
-        <label for="rental_location">Rental Location:</label> 
-        <select id="rental_location" name="rental_location">
-            <option value="">Select Rental Location</option>
-        </select><br><br> 
-        
-        <input type="submit" value="Submit"> </form>
-
-        <script>
+<script>
         // Function to fetch and display entries
         fetch('/api/getTable/rental_locations')
             .then(response => response.json())
@@ -50,6 +94,57 @@
 
             });
         });
+
+        const form = document.querySelector('#employee_form');
+
+
+function validateEmail(input) {
+  // Regular expression pattern for email address validation
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // Test the input against the email address pattern
+  if (emailPattern.test(input)) {
+    return true; // Email address is valid
+  } else {
+    return false; // Email address is invalid
+  }}
+
+function validatePhoneNumber(input) {
+      
+      const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
+
+      if (phonePattern.test(input)) {
+          return true; 
+      } else {
+          return false; 
+      }};
+      
+
+    // Validate Phone Number
+
+    // Add event listener to the form submission
+    form.addEventListener('submit', function(event) {
+    const phoneInput = document.querySelector('#phone');
+    const phoneNumber = phoneInput.value;
+
+    if (!validatePhoneNumber(phoneNumber)) {
+        event.preventDefault();
+        alert('Invalid Phone Number. Please use the format xxx-xxx-xxxx.');
+    }
+    });
+
+    // Validate Email
+
+    // Add event listener to the form submission
+    form.addEventListener('submit', function(event) {
+    const emailInput = document.querySelector('#email');
+    const email = emailInput.value;
+
+    if (!validateEmail(email)) {
+        event.preventDefault();
+        alert('Invalid email. Please use the format email@domain.com');
+    }
+    });
 
         
     </script>
