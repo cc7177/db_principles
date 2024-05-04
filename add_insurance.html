@@ -1,41 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Insurance</title>
-</head>
-
-<body>
-    <ul>
-        <li><a href="/getPage/vehicles">Vehicle Inventory</a></li>
-        <li><a href="/getPage/customers">Customers</a></li>
-        <li><a href="/getPage/rentals">Rentals</a></li>
-        <li><a href="/getPage/rental_locations">Rental Locations</a></li>
-        <li><a href="/getPage/packages">Rental Packages</a></li>
-        <li><a href="/getPage/employees">Employees</a></li>
-        <li><a href="/getPage/insurance">Insurance</a></li>
-    </ul>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Insurance</title>
+  <style>
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
     
-    <h1>Add Insurance</h1>
-    <form action="/api/createRecord/insurance" method="POST"> 
-        <label for="provider_name">Provider Name:</label> 
-        <input type="text" id="provider_name" name="provider_name" required><br><br> 
-        
-        <label for="policy_number">Policy #:</label> 
-        <input type="text" id="policy_number" name="policy_number" required><br><br> 
-        
-        <label for="coverage_type">Coverage Type:</label> 
-        <input type="text" id="coverage_type" name="coverage_type" required><br><br>  
-        
-        <label for="start_date">Start Date:</label> 
-        <input type="text" id="start_date" name="start_date" required><br><br> 
+    .form-group label {
+      flex: 0 0 150px;
+      margin-right: 10px;
+    }
+    
+    .form-group input {
+      flex: 0 0 25%;
+      padding: 5px;
+    }
+    
+    .form-group input[type="submit"] {
+      flex: 0;
+      padding: 10px 20px;
+    }
 
-        <label for="end_date">End Date:</label> 
-        <input type="text" id="end_date" name="end_date" required><br><br>
-        
-        <input type="submit" value="Submit"> </form>
+    .form-group input[type="text"] {
+      flex: 0 0 25%;
+      padding: 10px 20px;
+    }
+    
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+    
+    li {
+      float: left;
+    }
+    
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    
+    li a:hover {
+      background-color: #111;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li><a href="/getPage/vehicles">Vehicle Inventory</a></li>
+    <li><a href="/getPage/customers">Customers</a></li>
+    <li><a href="/getPage/rentals">Rentals</a></li>
+    <li><a href="/getPage/rental_locations">Rental Locations</a></li>
+    <li><a href="/getPage/packages">Rental Packages</a></li>
+    <li><a href="/getPage/employees">Employees</a></li>
+    <li><a href="/getPage/insurance">Insurance</a></li>
+  </ul>
+  
+  <h1>Add Insurance</h1>
+  
+  <form action="/api/createRecord/insurance" method="POST">
+    <div class="form-group">
+      <label for="provider_name">Provider Name:</label>
+      <input type="text" id="provider_name" name="provider_name" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="policy_number">Policy #:</label>
+      <input type="text" id="policy_number" name="policy_number" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="coverage_type">Coverage Type:</label>
+      <input type="text" id="coverage_type" name="coverage_type" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="start_date">Start Date:</label>
+      <input type="text" id="start_date" name="start_date" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="end_date">End Date:</label>
+      <input type="text" id="end_date" name="end_date" required>
+    </div>
+    
+    <div class="form-group">
+      <input type="submit" value="Submit">
+    </div>
+  </form>
 </body>
-
 </html>
