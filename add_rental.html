@@ -171,15 +171,19 @@
         const enddateInput = document.querySelector('#enddate');
         const actualEdInput = document.querySelector('#actualenddate');
 
+        const dateCheck = [];
+
         field_array = [startdateInput, enddateInput, actualEdInput];
 
         field_array.forEach(field => {
-            if (!validateDate(field)) {
-            event.preventDefault();
-            alert('Invalid date. Please use the format mm-dd-yyyy');
-        }
+            dateCheck.push(validateDate(field));
         });
-
+        
+        if (dateCheck.includes(false)) {
+        event.preventDefault();
+        alert('Invalid date. Please use the format mm-dd-yyyy');
+        }
+       
         });
 
         </script>
