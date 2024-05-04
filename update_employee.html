@@ -1,42 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Employee</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Employee</title>
+  <style>
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      flex: 0 0 150px;
+      margin-right: 10px;
+    }
+    
+    .form-group input,
+    .form-group select {
+      flex: 0 0 25%;
+      padding: 5px;
+    }
+    
+    .form-group input[type="submit"] {
+      flex: 0;
+      padding: 10px 20px;
+    }
+  </style>
 </head>
-
 <body>
-    <h1>Update Employee</h1>
-    <form action="/api/updateRecord/employees" id="update_form" method="POST"> 
-        <input type="hidden" id="primaryKeyColumn" name="primaryKeyColumn" value="employeeid"><br><br>
-        <input type="hidden" id="primaryKeyValue" name="primaryKeyValue"><br><br>
-        
-        <label for="first_name">First Name:</label> 
-        <input type="text" id="first_name" name="first_name" required><br><br> 
-        
-        <label for="last_name">Last Name:</label> 
-        <input type="text" id="last_name" name="last_name" required><br><br> 
-        
-        <label for="email">Email:</label> 
-        <input type="text" id="email" name="email" required><br><br> 
-
-        <label for="phone">Phone:</label> 
-        <input type="text" id="phone" name="phone" required><br><br> 
-
-        <label for="position">Position:</label> 
-        <input type="text" id="position" name="position" required><br><br> 
-
-        <label for="hire_date">Hire Date:</label> 
-        <input type="text" id="hire_date" name="hire_date" required><br><br> 
-
-        <label for="rental_location">Rental Location:</label> 
-        <select id="rental_location" name="rental_location">
-            <option value="">Select Rental Location</option>
-        </select><br><br> 
-        
-        <input type="submit" value="Submit"> </form>
+  <h1>Update Employee</h1>
+  
+  <form action="/api/updateRecord/employees" id="update_form" method="POST">
+    <input type="hidden" id="primaryKeyColumn" name="primaryKeyColumn" value="employeeid">
+    <input type="hidden" id="primaryKeyValue" name="primaryKeyValue">
+    
+    <div class="form-group">
+      <label for="first_name">First Name:</label>
+      <input type="text" id="first_name" name="first_name" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="last_name">Last Name:</label>
+      <input type="text" id="last_name" name="last_name" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="phone">Phone:</label>
+      <input type="text" id="phone" name="phone" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="position">Position:</label>
+      <input type="text" id="position" name="position" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="hire_date">Hire Date:</label>
+      <input type="text" id="hire_date" name="hire_date" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="rental_location">Rental Location:</label>
+      <select id="rental_location" name="rental_location">
+        <option value="">Select Rental Location</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <input type="submit" value="Submit">
+    </div>
+  </form>
 </body>
 
 <script>
@@ -49,14 +88,14 @@
   fetch('/api/getTable/rental_locations')
     .then(response => response.json())
     .then(data => {
-      const dropdown = document.querySelector('#rental_location');
-      dropdown.innerHTML = ''; // Clear previous entries
+      const rental_dropdown = document.querySelector('#rental_location');
+      rental_dropdown.innerHTML = ''; // Clear previous entries
 
       data.rows.forEach(entry => {
         const newOption = document.createElement('option');
         newOption.value = entry.location_id;
         newOption.textContent = `${entry.name}`;
-        dropdown.appendChild(newOption);
+        rental_dropdown.appendChild(newOption);
       });
     })
     .then(() => fetch(`/api/getRecord/employees?column=employeeid&value=${urlParams.get('id')}`))
@@ -68,7 +107,7 @@
         let employeeID = document.querySelector('#primaryKeyValue');
         employeeID.value = urlParams.get('id')
 
-        const selected_location = location_dl.querySelector(`option[value="${entry.location_id}"]`);
+        const selected_location = location_dl.querySelector(`option[value="${entry.rental_location}"]`);
         selected_location.selected = true;
 
         let first_name = document.querySelector('#first_name');
@@ -133,6 +172,18 @@ function validatePhoneNumber(input) {
     }
     });
 
+    
+    function validateDate(input) {
+    // Regular expression pattern for Date validation
+    const datePattern = /^\d{2}-\d{2}-\d{4}$/;
+
+    // Test the input against the date pattern
+    if (datePattern.test(input)) {
+        return true; // date is valid
+    } else {
+        return false; // date is invalid
+    }}
+
     // Validate Email
 
     // Add event listener to the form submission
@@ -143,6 +194,19 @@ function validatePhoneNumber(input) {
     if (!validateEmail(email)) {
         event.preventDefault();
         alert('Invalid email. Please use the format email@domain.com');
+    }
+    });
+
+    // Validate Date
+
+    // Add event listener to the form submission
+    form.addEventListener('submit', function(event) {
+    const dateInput = document.querySelector('#hire_date');
+    const date = dateInput.value;
+
+    if (!validateDate(date)) {
+        event.preventDefault();
+        alert('Invalid date. Please use the format mm-dd-yyyy');
     }
     });
 
