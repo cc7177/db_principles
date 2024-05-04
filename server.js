@@ -66,20 +66,36 @@ app.get('/api/getTable/:table', (req, res) => {
     });
 });
 
-app.get('/api/getRecord/:table', (req, res) => {
-    const tableName = req.params.table;
-    const columnName = req.query.column;
-    const columnValue = req.query.value;
+// app.get('/api/getRecord/:table', (req, res) => {
+//     const tableName = req.params.table;
+//     const columnName = req.query.column;
+//     const columnValue = req.query.value;
 
-    db.query(`SELECT * FROM ${tableName} WHERE ${columnName}=$1`, [columnValue], (err, results) => {
-        if(err) {
-            console.error('Error executing query...', err);
-            res.status(500).json({error: 'Internal Server Error'})
-            return;
-        }
-        res.json(results);
-    });
+//     db.query(`SELECT * FROM ${tableName} WHERE ${columnName}=$1`, [columnValue], (err, results) => {
+//         if(err) {
+//             console.error('Error executing query...', err);
+//             res.status(500).json({error: 'Internal Server Error'})
+//             return;
+//         }
+//         res.json(results);
+//     });
+// });
+
+app.get('/api/getRecord/:table', (req, res) => {
+  const tableName = req.params.table;
+  const columnName = req.query.column;
+  const columnValue = req.query.value;
+
+  db.query(`CALL get_record_by_id($1, $2, $3)`, [tableName, columnName, columnValue], (err, results) => {
+      if(err) {
+          console.error('Error executing query...', err);
+          res.status(500).json({error: 'Internal Server Error'})
+          return;
+      }
+      res.json(results);
+  });
 });
+
 
 app.post('/api/updateRecord/:table', (req, res) => {
   const tableName = req.params.table;
@@ -108,6 +124,7 @@ app.post('/api/updateRecord/:table', (req, res) => {
     }
   
   });
+
   parameterValues.push(primaryKeyValue);
 
   const query = `UPDATE ${tableName} SET ${setClause} WHERE ${primaryKeyColumn}=$${updateColumns.length + 1}`;
@@ -148,9 +165,7 @@ app.post('/api/createRecord/:table', (req, res) => {
     });
   
     const query = `INSERT INTO ${tableName} (${insertColumns}) VALUES (${placeHolderArray})`;
-  
-    console.log(query);
-  
+   
     db.query(query, parameterValues, (err, results) => {
       if (err) {
         console.error('Error executing query...', err);
@@ -165,8 +180,6 @@ app.delete('/api/removeRecord/:table', function(req, res) {
     const tableName = req.params.table;
     const columnName = req.query.column;
     const columnValue = req.query.value;
-
-    console.log(`DELETE FROM ${tableName} WHERE ${columnName}=${columnValue}`)
 
     db.query(`DELETE FROM ${tableName} WHERE ${columnName}=$1`, [columnValue], (err, results) => {
         if(err) {
