@@ -119,11 +119,11 @@ fetch('/api/getTable/states')
         const selected_state = state_dl.querySelector(`option[value="${entry.stateid}"]`);
         selected_state.selected = true;
 
-        let first_name = document.querySelector('#first_name');
-        first_name.value = entry.first_name;
+        let firstname = document.querySelector('#firstname');
+        firstname.value = entry.firstname;
 
-        let last_name = document.querySelector('#last_name');
-        last_name.value = entry.last_name;
+        let lastname = document.querySelector('#lastname');
+        last_name.value = entry.lastname;
 
         let driverlicensenumber = document.querySelector('#driverlicensenumber');
         driverlicensenumber.value = entry.driverlicensenumber;
