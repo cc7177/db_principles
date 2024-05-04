@@ -54,14 +54,18 @@ app.get('/getForm/update/:entity', function(req, res) {
 app.get('/api/getTable/:table', (req, res) => {
     const tableName = req.params.table;
 
-    query = `SELECT * FROM ${tableName}`
+    query = `SELECT * FROM ${tableName}`;
+
+    console.log(req.params);
 
     if(req.params) {
-      const orderBy = req.query.order
-      const orderType = req.query.type
+      const orderBy = req.query.order;
+      const orderType = req.query.type;
 
       query = query + ` ORDER BY ${orderBy} ${orderType}`;
     }
+
+    console.log(query);
 
     db.query(query, (err, results) => {
         if(err) {
