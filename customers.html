@@ -81,7 +81,7 @@ li a:hover:not(.active) {
 
         </tbody>
     </table>
-    <button type="submit" onclick="window.location.href='/getForm/add/customer?order=lastname&type=asc'">Add Customer</button>
+    <button type="submit" onclick="window.location.href='/getForm/add/customer'">Add Customer</button>
 </body>
 
     <script>
@@ -92,7 +92,7 @@ li a:hover:not(.active) {
        
         // Function to fetch and display entries
         async function fetchEntries() {
-            const response = await fetch('/api/getTable/customers');
+            const response = await fetch('/api/getTable/customers?order=lastname&type=asc');
             const data = await response.json();
             const entriesList = document.querySelector('#customerTable tbody');
             entriesList.innerHTML = ''; // Clear previous entries
