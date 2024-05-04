@@ -137,9 +137,9 @@
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: `isoDate=$${encodeURIComponent(entry.value)}`
+          body: `isoDate=$${encodeURIComponent(entry.hire_date)}`
         }).then(response => {
-          hire_date.value = entry.hire_date;
+          hire_date.value = response.text();
         })
       });
     })
