@@ -132,7 +132,7 @@
 
         let hire_date = document.querySelector('#hire_date');
 
-        const formattedDate = fetch('/convert-date', {
+        fetch('/convert-date', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
