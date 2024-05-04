@@ -90,7 +90,7 @@ li a:hover:not(.active) {
        
         // Function to fetch and display entries
         async function fetchEntries() {
-            const response = await fetch('/api/getTable/rental_locations');
+            const response = await fetch('/api/getTable/rental_locations?order=name&type=asc');
             const data = await response.json();
             const entriesList = document.querySelector('#rentalTable tbody');
             entriesList.innerHTML = ''; // Clear previous entries
