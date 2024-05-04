@@ -176,7 +176,7 @@
         field_array = [startdateInput, enddateInput, actualEdInput];
 
         field_array.forEach(field => {
-            dateCheck.push(validateDate(field));
+            dateCheck.push(validateDate(field.value));
         });
         
         if (dateCheck.includes(false)) {
