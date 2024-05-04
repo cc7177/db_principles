@@ -1,31 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Rental Package</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Rental Package</title>
+  <style>
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      flex: 0 0 150px;
+      margin-right: 10px;
+    }
+    
+    .form-group input {
+      flex: 0 0 25%;
+      padding: 5px;
+    }
+    
+    .form-group input[type="submit"] {
+      flex: 0;
+      padding: 10px 20px;
+    }
+
+    .form-group input[type="text"] {
+      flex: 0 0 25%;
+      padding: 10px 20px;
+    }
+  </style>
 </head>
-
 <body>
-    <h1>Update Rental Package</h1>
-    <form action="/api/updateRecord/packages" id="update_form" method="POST"> 
-        <input type="hidden" id="primaryKeyColumn" name="primaryKeyColumn" value="packageid"><br><br>
-        <input type="hidden" id="primaryKeyValue" name="primaryKeyValue"><br><br>
-        
-        <label for="name">Package Name:</label> 
-        <input type="text" id="name" name="name" required><br><br>  
-        
-        <label for="description">Package Description:</label> 
-        <input type="text" id="description" name="description" required><br><br> 
-
-        <label for="base_price">Base Price:</label> 
-        <input type="text" id="base_price" name="base_price"><br><br>
-
-        <label for="included_mileage">Included Mileage:</label> 
-        <input type="text" id="included_mileage" name="included_mileage"><br><br>
-       
-        <input type="submit" value="Submit"> </form>
+  <h1>Update Rental Package</h1>
+  
+  <form action="/api/updateRecord/packages" id="update_form" method="POST">
+    <input type="hidden" id="primaryKeyColumn" name="primaryKeyColumn" value="packageid">
+    <input type="hidden" id="primaryKeyValue" name="primaryKeyValue">
+    
+    <div class="form-group">
+      <label for="name">Package Name:</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="description">Package Description:</label>
+      <input type="text" id="description" name="description" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="base_price">Base Price:</label>
+      <input type="text" id="base_price" name="base_price">
+    </div>
+    
+    <div class="form-group">
+      <label for="included_mileage">Included Mileage:</label>
+      <input type="text" id="included_mileage" name="included_mileage">
+    </div>
+    
+    <div class="form-group">
+      <input type="submit" value="Submit">
+    </div>
+  </form>
 </body>
 
 <script>
