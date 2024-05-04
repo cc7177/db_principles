@@ -53,10 +53,17 @@ app.get('/getForm/update/:entity', function(req, res) {
 
 app.get('/api/getTable/:table', (req, res) => {
     const tableName = req.params.table;
-    const orderBy = req.query.order
-    const orderType = req.query.type
 
-    db.query(`SELECT * FROM ${tableName} ORDER BY ${orderBy} ${orderType}`, (err, results) => {
+    query = `SELECT * FROM ${tableName}`
+
+    if(req.params) {
+      const orderBy = req.query.order
+      const orderType = req.query.type
+
+      query = query + ` ORDER BY ${orderBy} ${orderType}`;
+    }
+
+    db.query(query, (err, results) => {
         if(err) {
             console.error('Error executing query...', err);
             res.status(500).json({error: 'Internal Server Error'})
