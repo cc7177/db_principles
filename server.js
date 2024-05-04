@@ -93,7 +93,7 @@ app.get('/api/getRecord/:table', (req, res) => {
   const columnName = req.query.column;
   const columnValue = req.query.value;
 
-  db.query(`CALL get_record_by_id($1, $2, $3)`, [tableName, columnName, columnValue], (err, results) => {
+  db.query(`CALL get_record_by_id(${tableName}, ${columnName}, ${columnValue})`, (err, results) => {
       if(err) {
           console.error('Error executing query...', err);
           res.status(500).json({error: 'Internal Server Error'})
