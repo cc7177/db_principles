@@ -91,7 +91,7 @@ li a:hover:not(.active) {
        
         // Function to fetch and display entries
         async function fetchEntries() {
-            const response = await fetch('/api/getTable/employees');
+            const response = await fetch('/api/getTable/employees?order=last_name&type=asc');
             const data = await response.json();
             const entriesList = document.querySelector('#employeeTable tbody');
             entriesList.innerHTML = ''; // Clear previous entries
