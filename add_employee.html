@@ -109,6 +109,17 @@ function validateEmail(input) {
     return false; // Email address is invalid
   }}
 
+function validateDate(input) {
+  // Regular expression pattern for Date validation
+  const datePattern = /^\d{2}-\d{2}-\d{4}$/;
+
+  // Test the input against the date pattern
+  if (datePattern.test(input)) {
+    return true; // date is valid
+  } else {
+    return false; // date is invalid
+  }}
+
 function validatePhoneNumber(input) {
       
       const phonePattern = /^\d{3}-\d{3}-\d{4}$/;
@@ -143,6 +154,19 @@ function validatePhoneNumber(input) {
     if (!validateEmail(email)) {
         event.preventDefault();
         alert('Invalid email. Please use the format email@domain.com');
+    }
+    });
+
+    // Validate Date
+
+    // Add event listener to the form submission
+    form.addEventListener('submit', function(event) {
+    const dateInput = document.querySelector('#hire_date');
+    const date = dateInput.value;
+
+    if (!validateDate(date)) {
+        event.preventDefault();
+        alert('Invalid date. Please use the format mm-dd-yyyy');
     }
     });
 
