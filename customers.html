@@ -1,131 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vehicle Rental Database (VRD)</title>
-  <h1>VRD - Customers</h1>
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Rental Database (VRD)</title>
+    <h1>VRD - Customers</h1>
+<style>
     table {
-      width: 100%;
-      border-collapse: collapse;
-      border-spacing: 0;
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
     }
     th, td {
-      padding: 8px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
     }
     tr:hover {
-      background-color: #f5f5f5;
+        background-color: #f5f5f5;
     }
     th {
-      background-color: #f2f2f2;
+        background-color: #f2f2f2;
     }
+    
     ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: #333;
-    }
-    li {
-      float: left;
-    }
-    li a {
-      display: block;
-      color: white;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-    }
-    li a:hover:not(.active) {
-      background-color: #111;
-    }
-    .active {
-      background-color: #04AA6D;
-    }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    .form-group label {
-      display: inline-block;
-      width: 150px;
-      text-align: right;
-      margin-right: 10px;
-    }
-    .form-group input {
-      display: inline-block;
-      width: 200px;
-    }
-  </style>
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #04AA6D;
+}
+</style>
 </head>
 <body>
-  <ul>
-    <li><a href="/getPage/vehicles">Vehicle Inventory</a></li>
-    <li><a class="active" href="/getPage/customers">Customers</a></li>
-    <li><a href="/getPage/rentals">Rentals</a></li>
-    <li><a href="/getPage/rental_locations">Rental Locations</a></li>
-    <li><a href="/getPage/packages">Rental Packages</a></li>
-    <li><a href="/getPage/employees">Employees</a></li>
-    <li><a href="/getPage/insurance">Insurance</a></li>
-  </ul>
+    <ul>
+        <li><a href="/getPage/vehicles">Vehicle Inventory</a></li>
+        <li><a class="active" href="/getPage/customers">Customers</a></li>
+        <li><a href="/getPage/rentals">Rentals</a></li>
+        <li><a href="/getPage/rental_locations">Rental Locations</a></li>
+        <li><a href="/getPage/packages">Rental Packages</a></li>
+        <li><a href="/getPage/employees">Employees</a></li>
+        <li><a href="/getPage/insurance">Insurance</a></li>
+</ul>
+    <table id="customerTable">
+        <thead id="">
+            <tr>
+                <th>Customer ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Driver License Number</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>State ID</th>
+                <th>Zip Code</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
 
-  <table id="customerTable">
-    <thead>
-      <tr>
-        <th>Customer ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Driver License Number</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Address</th>
-        <th>State ID</th>
-        <th>Zip Code</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-
-  <h2>Add Customer</h2>
-  <form>
-    <div class="form-group">
-      <label for="firstName">First Name:</label>
-      <input type="text" id="firstName" name="firstName" required>
-    </div>
-    <div class="form-group">
-      <label for="lastName">Last Name:</label>
-      <input type="text" id="lastName" name="lastName" required>
-    </div>
-    <div class="form-group">
-      <label for="driverLicenseNumber">Driver License Number:</label>
-      <input type="text" id="driverLicenseNumber" name="driverLicenseNumber" required>
-    </div>
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
-    </div>
-    <div class="form-group">
-      <label for="phone">Phone:</label>
-      <input type="tel" id="phone" name="phone" required>
-    </div>
-    <div class="form-group">
-      <label for="address">Address:</label>
-      <input type="text" id="address" name="address" required>
-    </div>
-    <div class="form-group">
-      <label for="stateId">State ID:</label>
-      <input type="text" id="stateId" name="stateId" required>
-    </div>
-    <div class="form-group">
-      <label for="zipCode">Zip Code:</label>
-      <input type="text" id="zipCode" name="zipCode" required>
-    </div>
-    <button type="submit">Add Customer</button>
-  </form>
+        </tbody>
+    </table>
+    <button type="submit" onclick="window.location.href='/getForm/add/customer'">Add Customer</button>
+</body>
 
     <script>
 
