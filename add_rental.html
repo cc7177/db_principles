@@ -36,7 +36,7 @@
 <body>
   <h1>Add Rental</h1>
   
-  <form action="/api/createRecord/rentals" method="POST">
+  <form id="rental_form" action="/api/createRecord/rentals" method="POST">
     <div class="form-group">
       <label for="vehicleid">Vehicle ID:</label>
       <select id="vehicleid" name="vehicleid">
@@ -149,6 +149,8 @@
 
             });
         });
+
+        const form = document.querySelector('#rental_form');
 
         function validateDate(input) {
         // Regular expression pattern for Date validation
