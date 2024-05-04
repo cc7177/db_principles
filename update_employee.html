@@ -138,8 +138,9 @@
             'Content-Type': 'application/x-www-form-urlencoded'
           },
           body: `isoDate=$${encodeURIComponent(entry.hire_date)}`
-        }).then(response => {
-          hire_date.value = response.text();
+        }).then(response => response.text())
+          .then(data => {
+          hire_date.value = data;
         })
       });
     })
