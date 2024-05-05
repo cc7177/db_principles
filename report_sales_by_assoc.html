@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Rental Database (VRD)</title>
+    <h1>Sales Associate Report</h1>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    
+    ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #04AA6D;
+}
+</style>
+</head>
+<body>
+    <ul>
+      <li><a href="/getPage/vehicles">Vehicle Inventory</a></li>
+      <li><a href="/getPage/customers">Customers</a></li>
+      <li><a href="/getPage/rentals">Rentals</a></li>
+      <li><a href="/getPage/rental_locations">Rental Locations</a></li>
+      <li><a href="/getPage/packages">Rental Packages</a></li>
+      <li><a href="/getPage/employees">Employees</a></li>
+      <li><a href="/getPage/insurance">Insurance</a></li>
+</ul>
+<table id="salesTable">
+  <thead id="">
+      <tr>
+          <th>Associate Name</th>
+          <th>Rental Sales Count</th>
+          <th>Total Sales ($)</th>
+      </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+</table>
+</body>
+
+<script>
+
+  // Function to fetch and display entries
+  async function fetchEntries() {
+      const response = await fetch('/api/getTable/public.v_sales_by_associate');
+      const data = await response.json();
+      const entriesList = document.querySelector('#salesTable tbody');
+      entriesList.innerHTML = ''; // Clear previous entries
+      data.rows.forEach(entry => {
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = `
+          <td>${entry.associate_name}</td>
+          <td>${entry.total_rentals}</td>
+          <td>${entry.total_sales}</td>
+          `
+          entriesList.appendChild(newRow);
+      });
+  }
+
+</script>
+</body>
+</html>

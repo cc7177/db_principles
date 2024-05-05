@@ -135,7 +135,7 @@ li a:hover:not(.active) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
 
-  fetch('/api/getTable/vehicles')
+  fetch('/api/getTable/vehicles?column')
     .then(response => response.json())
     .then(data => {
       const dropdown = document.querySelector('#vehicleid');
