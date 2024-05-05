@@ -51,6 +51,19 @@ app.get('/getForm/update/:entity', function(req, res) {
   });
 
 
+app.get('/api/getRentals', (req, res) => {
+
+  db.query('SELECT * FROM get_rental_details()', (err, results) => {
+    if(err) {
+        console.error('Error executing query...', err);
+        res.status(500).json({error: 'Internal Server Error'})
+        return;
+    }
+    res.json(results);
+
+});
+});
+
 app.get('/api/getTable/:table', (req, res) => {
     const tableName = req.params.table;
 

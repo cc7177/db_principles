@@ -66,14 +66,12 @@ li a:hover:not(.active) {
         <thead id="">
             <tr>
                 <th>Rental ID</th>
-                <th>Vehicle ID</th>
-                <th>Customer ID</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Actual End Date</th>
+                <th>Vehicle Make</th>
+                <th>Vehicle Model</th>
+                <th>Vehicle Year</th>
+                <th>Customer</th>
+                <th>Sales Associate</th>
                 <th>Daily Rate</th>
-                <th>Sales Associate ID</th>
-                <th>Package ID</th>
                 <th>Total Cost</th>
                 <th></th>
                 <th></th>
@@ -85,7 +83,7 @@ li a:hover:not(.active) {
     </table>
     <button type="submit" onclick="window.location.href='/getForm/add/rental'">Add Rental</button>
     <button type="submit" onclick="window.location.href='/getPage/report_sales_by_assoc'">Sales Associate Report</button>
-    <button type="submit" onclick="window.location.href='/getForm/add/rental'">Vehicle Sales Report</button>
+    <button type="submit" onclick="window.location.href='/getForm/add/report_sales_by_vehicle'">Vehicle Sales Report</button>
 </body>
 
     <script>
@@ -96,37 +94,24 @@ li a:hover:not(.active) {
        
         // Function to fetch and display entries
         async function fetchEntries() {
-            const response = await fetch('/api/getTable/rentals?order=rentalid&type=desc');
+            const response = await fetch('/api/getRentals');
             const data = await response.json();
             const entriesList = document.querySelector('#rentalTable tbody');
             entriesList.innerHTML = ''; // Clear previous entries
             data.rows.forEach(entry => {
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
-                <td>${entry.rentalid}</td>
-                <td>${entry.vehicleid}</td>
-                <td>${entry.customerid}</td>
-                <td>${new Date(entry.startdate).toLocaleDateString('en-US', 
-                    { year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit'
-                    }).replace(/\//g, '-')}</td>
-                    <td>${new Date(entry.enddate).toLocaleDateString('en-US', 
-                    { year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit'
-                    }).replace(/\//g, '-')}</td>
-                    <td>${new Date(entry.actualenddate).toLocaleDateString('en-US', 
-                    { year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit'
-                    }).replace(/\//g, '-')}</td>
+                <td>${entry.rental_id}</td>
+                <td>${entry.vehicle_make}</td>
+                <td>${entry.vehicle_model}</td>
+                <td>${entry.vehicle_year}</td>
+                <td>${entry.customer_firstname} ${entry.customer_lastname}</td>
+                <td>${entry.employee_first_name} ${entry.employee_last_name}</td>
+                <td>${entry.package_name}</td>
                 <td>${entry.dailyrate}</td>
-                <td>${entry.sales_associate}</td>
-                <td>${entry.package_id}</td>
                 <td>${entry.totalcost}</td>
-                <td><a href='/getForm/update/rental?id=${entry.rentalid}'>Update</a></td>
-                <td><a href='javascript:deleteEntry(${entry.rentalid})'>Delete</a></td>
+                <td><a href='/getForm/update/rental?id=${entry.rental_id}'>Update</a></td>
+                <td><a href='javascript:deleteEntry(${entry.rental_id})'>Delete</a></td>
                 `
                 entriesList.appendChild(newRow);
             });
