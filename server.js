@@ -77,35 +77,21 @@ app.get('/api/getTable/:table', (req, res) => {
     });
 });
 
-// app.get('/api/getRecord/:table', (req, res) => {
-//     const tableName = req.params.table;
-//     const columnName = req.query.column;
-//     const columnValue = req.query.value;
-
-//     db.query(`SELECT * FROM ${tableName} WHERE ${columnName}=$1`, [columnValue], (err, results) => {
-//         if(err) {
-//             console.error('Error executing query...', err);
-//             res.status(500).json({error: 'Internal Server Error'})
-//             return;
-//         }
-//         res.json(results);
-//     });
-// });
-
 app.get('/api/getRecord/:table', (req, res) => {
-  const tableName = req.params.table;
-  const columnName = req.query.column;
-  const columnValue = req.query.value;
+    const tableName = req.params.table;
+    const columnName = req.query.column;
+    const columnValue = req.query.value;
 
-  db.query(`CALL get_record_by_id(${tableName}, ${columnName}, ${columnValue})`, (err, results) => {
-      if(err) {
-          console.error('Error executing query...', err);
-          res.status(500).json({error: 'Internal Server Error'})
-          return;
-      }
-      res.json(results);
-  });
+    db.query(`SELECT * FROM ${tableName} WHERE ${columnName}=$1`, [columnValue], (err, results) => {
+        if(err) {
+            console.error('Error executing query...', err);
+            res.status(500).json({error: 'Internal Server Error'})
+            return;
+        }
+        res.json(results);
+    });
 });
+
 
 
 app.post('/api/updateRecord/:table', (req, res) => {
