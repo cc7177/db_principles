@@ -56,9 +56,9 @@ app.get('/api/getTable/:table', (req, res) => {
 
     query = `SELECT * FROM ${tableName}`;
 
-    console.log(req.params);
+    console.log(req.query);
 
-    if(!(Object.keys(req.params).length === 0)) {
+    if(!(Object.keys(req.query).length === 0)) {
       const orderBy = req.query.order;
       const orderType = req.query.type;
 
